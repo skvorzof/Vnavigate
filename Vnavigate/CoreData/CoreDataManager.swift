@@ -46,6 +46,20 @@ final class CoreDataManager {
         }
         return fetchedAuthors
     }
+    
+    func fetchFriends() -> [Author] {
+        let request: NSFetchRequest<Author> = Author.fetchRequest()
+        request.predicate = NSPredicate(format: "isFriend = %@", "true")
+        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        var fetchedPosts: [Author] = []
+
+        do {
+            fetchedPosts = try persistentContainer.viewContext.fetch(request)
+        } catch let error {
+            print("Error fetched author posts \(error)")
+        }
+        return fetchedPosts
+    }
 
     func fetchPostsToAuthor(author: Author) -> [Post] {
         let request: NSFetchRequest<Post> = Post.fetchRequest()

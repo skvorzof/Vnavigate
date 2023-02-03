@@ -30,6 +30,11 @@
 		467F5B74298D2255007D4E4A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B73298D2255007D4E4A /* HomeViewModel.swift */; };
 		467F5B76298D2298007D4E4A /* PreloadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B75298D2298007D4E4A /* PreloadData.swift */; };
 		467F5B78298D2330007D4E4A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B77298D2330007D4E4A /* HomeViewController.swift */; };
+		467F5B7A298D3543007D4E4A /* Typealiases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B79298D3543007D4E4A /* Typealiases.swift */; };
+		467F5B7C298D3583007D4E4A /* HomeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B7B298D3583007D4E4A /* HomeSection.swift */; };
+		467F5B7E298D3A30007D4E4A /* HomeFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B7D298D3A30007D4E4A /* HomeFriendCell.swift */; };
+		467F5B80298D3B59007D4E4A /* HomeCompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B7F298D3B59007D4E4A /* HomeCompositionalLayout.swift */; };
+		467F5B82298D3F9B007D4E4A /* HomePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B81298D3F9B007D4E4A /* HomePostCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +63,11 @@
 		467F5B73298D2255007D4E4A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		467F5B75298D2298007D4E4A /* PreloadData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreloadData.swift; sourceTree = "<group>"; };
 		467F5B77298D2330007D4E4A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		467F5B79298D3543007D4E4A /* Typealiases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typealiases.swift; sourceTree = "<group>"; };
+		467F5B7B298D3583007D4E4A /* HomeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSection.swift; sourceTree = "<group>"; };
+		467F5B7D298D3A30007D4E4A /* HomeFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFriendCell.swift; sourceTree = "<group>"; };
+		467F5B7F298D3B59007D4E4A /* HomeCompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCompositionalLayout.swift; sourceTree = "<group>"; };
+		467F5B81298D3F9B007D4E4A /* HomePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +136,7 @@
 				467F5B4B298D1B5B007D4E4A /* CircularImageView.swift */,
 				467F5B49298D1B2E007D4E4A /* PhoneNumberFofmatter.swift */,
 				467F5B47298D1B07007D4E4A /* State.swift */,
+				467F5B79298D3543007D4E4A /* Typealiases.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -204,6 +215,7 @@
 		467F5B6F298D21F1007D4E4A /* Layouts */ = {
 			isa = PBXGroup;
 			children = (
+				467F5B7F298D3B59007D4E4A /* HomeCompositionalLayout.swift */,
 			);
 			path = Layouts;
 			sourceTree = "<group>";
@@ -211,6 +223,8 @@
 		467F5B70298D220C007D4E4A /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				467F5B7D298D3A30007D4E4A /* HomeFriendCell.swift */,
+				467F5B81298D3F9B007D4E4A /* HomePostCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -226,6 +240,7 @@
 		467F5B72298D2237007D4E4A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				467F5B7B298D3583007D4E4A /* HomeSection.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -303,6 +318,7 @@
 			files = (
 				467F5B51298D1BE1007D4E4A /* CoreDataManager.swift in Sources */,
 				467F5B74298D2255007D4E4A /* HomeViewModel.swift in Sources */,
+				467F5B7A298D3543007D4E4A /* Typealiases.swift in Sources */,
 				467F5B5A298D1F1D007D4E4A /* TabCoordinator.swift in Sources */,
 				467F5B4C298D1B5B007D4E4A /* CircularImageView.swift in Sources */,
 				467F5B67298D2154007D4E4A /* UIView+Extension.swift in Sources */,
@@ -312,15 +328,19 @@
 				467F5B76298D2298007D4E4A /* PreloadData.swift in Sources */,
 				467F5B62298D20A0007D4E4A /* FavoritesCoordinator.swift in Sources */,
 				467F5B58298D1E98007D4E4A /* AppCoordinator.swift in Sources */,
+				467F5B7C298D3583007D4E4A /* HomeSection.swift in Sources */,
 				467F5B65298D2139007D4E4A /* String+Extension.swift in Sources */,
 				467F5B69298D2169007D4E4A /* UIAlertController+Extension.swift in Sources */,
 				467F5B33298D1A45007D4E4A /* SceneDelegate.swift in Sources */,
+				467F5B80298D3B59007D4E4A /* HomeCompositionalLayout.swift in Sources */,
 				467F5B54298D1BFF007D4E4A /* CoreDataModel.xcdatamodeld in Sources */,
 				467F5B78298D2330007D4E4A /* HomeViewController.swift in Sources */,
+				467F5B7E298D3A30007D4E4A /* HomeFriendCell.swift in Sources */,
 				467F5B5C298D1F61007D4E4A /* CustomColor.swift in Sources */,
 				467F5B48298D1B07007D4E4A /* State.swift in Sources */,
 				467F5B5E298D201D007D4E4A /* HomeCoordinator.swift in Sources */,
 				467F5B6B298D217E007D4E4A /* UICollectionView+Extension.swift in Sources */,
+				467F5B82298D3F9B007D4E4A /* HomePostCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

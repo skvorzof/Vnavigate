@@ -11,6 +11,23 @@ final class HomeViewController: UIViewController {
 
     private let coordinator: HomeCoordinator
     private let viewModel: HomeViewModel
+    private var dataSource: HomeDiffableDataSource?
+
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
+        return activityIndicator
+    }()
+
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(
+            frame: view.bounds,
+            collectionViewLayout: HomeCompositionalLayout { [weak self] in
+                self?.viewModel.dataSourceSnapshot.sectionIdentifiers[$0].layoutType ?? .friendsLayout
+            })
+        return collectionView
+    }()
 
     init(coordinator: HomeCoordinator, viewModel: HomeViewModel) {
         self.coordinator = coordinator
@@ -26,6 +43,7 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureColletionView()
         configureViewModel()
         viewModel.changeState(.initial)
     }
@@ -33,17 +51,67 @@ final class HomeViewController: UIViewController {
     private func configureViewModel() {
         viewModel.updateState = { [weak self] state in
             guard let self = self else { return }
-            
+
             switch state {
             case .initial:
                 break
             case .loading:
-                break
+                self.activityIndicator.startAnimating()
             case .loaded:
-                break
+                self.activityIndicator.stopAnimating()
+                self.dataSource?.apply(self.viewModel.dataSourceSnapshot)
             case .error(let error):
-                print(error)
+                self.showAlert(with: "Ошибка", and: error)
             }
         }
     }
+
+    private func configureColletionView() {
+        view.addSubview(collectionView)
+
+        let homeFriendCellRegistration = UICollectionView.CellRegistration<HomeFriendCell, Author> { cell, indexPath, author in
+            cell.configure(author: author)
+            cell.delegate = self
+        }
+
+        let homePostCellRegistration = UICollectionView.CellRegistration<HomePostCell, Post> { cell, indexPath, post in
+            cell.configure(post: post)
+            cell.delegate = self
+        }
+
+        dataSource = HomeDiffableDataSource(collectionView: collectionView) { collectionView, indexPath, section in
+
+            switch section {
+            case .friendsItem(let author):
+                return collectionView.dequeueConfiguredReusableCell(using: homeFriendCellRegistration, for: indexPath, item: author)
+
+            case .postsItem(let post):
+                return collectionView.dequeueConfiguredReusableCell(using: homePostCellRegistration, for: indexPath, item: post)
+            }
+        }
+    }
+}
+
+// MARK: - HomeFriendCellDelegate
+extension HomeViewController: HomeFriendCellDelegate {
+    func didTapAvatar(author: Author) {
+        print("didTapAvatar \(author.name ?? "")")
+    }
+}
+
+// MARK: - HomePostCellDelegate
+extension HomeViewController: HomePostCellDelegate {
+    func didTapArticle(post: Post) {
+        print("didTapArticle \(post.article ?? "")")
+    }
+    
+    func didTapIsLike(post: Post) {
+        print("didTapIsLike \(post.isLike)")
+    }
+    
+    func didTapIsFavorite(post: Post) {
+        print("didTapIsFavorite \(post.isFavorites)")
+    }
+    
+    
 }
