@@ -16,7 +16,6 @@
         <attribute name="article" optional="YES" attributeType="String"/>
         <attribute name="isFavorites" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isLike" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="like" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="thumbnail" optional="YES" attributeType="String"/>
         <relationship name="author" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Author" inverseName="posts" inverseEntity="Author"/>
     </entity>
