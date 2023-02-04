@@ -36,13 +36,13 @@ final class HomePostCell: UICollectionViewCell {
         return label
     }()
 
-    private let isLike = UIImageView()
-    private let isFavorite = UIImageView()
+    private let likeIcon = UIImageView()
+    private let favoriteIcon = UIImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        setSubviews(avatar, name, profession, thumbnail, article, isLike, isFavorite)
+        setSubviews(avatar, name, profession, thumbnail, article, likeIcon, favoriteIcon)
         setUI()
         setGesture()
         setConstraints()
@@ -55,8 +55,8 @@ final class HomePostCell: UICollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        isLike.image = nil
-        isFavorite.image = nil
+        likeIcon.image = nil
+        favoriteIcon.image = nil
     }
 
     func configure(post: Post) {
@@ -67,17 +67,11 @@ final class HomePostCell: UICollectionViewCell {
         thumbnail.image = UIImage(named: post.thumbnail ?? "")
         article.text = post.article?.limitedText(to: 120)
 
-        if post.isLike {
-            isLike.image = UIImage(systemName: "heart.fill")
-        } else {
-            isLike.image = UIImage(systemName: "heart")
-        }
+        let likeImage = post.isLike ? "heart.fill" : "heart"
+        likeIcon.image = UIImage(systemName: likeImage)
 
-        if post.isFavorite {
-            isFavorite.image = UIImage(systemName: "bookmark.fill")
-        } else {
-            isFavorite.image = UIImage(systemName: "bookmark")
-        }
+        let favoriteImage = post.isFavorite ? "bookmark.fill" : "bookmark"
+        favoriteIcon.image = UIImage(systemName: favoriteImage)
     }
 
     private func setSubviews(_ subviews: UIView...) {
@@ -97,12 +91,12 @@ final class HomePostCell: UICollectionViewCell {
         article.isUserInteractionEnabled = true
 
         let tapIsLikeGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsLike))
-        isLike.addGestureRecognizer(tapIsLikeGesture)
-        isLike.isUserInteractionEnabled = true
+        likeIcon.addGestureRecognizer(tapIsLikeGesture)
+        likeIcon.isUserInteractionEnabled = true
 
         let tapIsFavoriteGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsFavorite))
-        isFavorite.addGestureRecognizer(tapIsFavoriteGesture)
-        isFavorite.isUserInteractionEnabled = true
+        favoriteIcon.addGestureRecognizer(tapIsFavoriteGesture)
+        favoriteIcon.isUserInteractionEnabled = true
     }
 
     @objc
@@ -145,15 +139,15 @@ final class HomePostCell: UICollectionViewCell {
             article.leadingAnchor.constraint(equalTo: leadingAnchor),
             article.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            isLike.widthAnchor.constraint(equalToConstant: 28),
-            isLike.heightAnchor.constraint(equalToConstant: 28),
-            isLike.topAnchor.constraint(equalTo: article.bottomAnchor, constant: 7),
-            isLike.leadingAnchor.constraint(equalTo: leadingAnchor),
+            likeIcon.widthAnchor.constraint(equalToConstant: 28),
+            likeIcon.heightAnchor.constraint(equalToConstant: 28),
+            likeIcon.topAnchor.constraint(equalTo: article.bottomAnchor, constant: 7),
+            likeIcon.leadingAnchor.constraint(equalTo: leadingAnchor),
 
-            isFavorite.widthAnchor.constraint(equalToConstant: 25),
-            isFavorite.heightAnchor.constraint(equalToConstant: 25),
-            isFavorite.topAnchor.constraint(equalTo: article.bottomAnchor, constant: 10),
-            isFavorite.trailingAnchor.constraint(equalTo: trailingAnchor),
+            favoriteIcon.widthAnchor.constraint(equalToConstant: 25),
+            favoriteIcon.heightAnchor.constraint(equalToConstant: 25),
+            favoriteIcon.topAnchor.constraint(equalTo: article.bottomAnchor, constant: 10),
+            favoriteIcon.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
     }
 }

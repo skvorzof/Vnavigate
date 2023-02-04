@@ -1,13 +1,13 @@
 //
-//  HomePostDetailViewController.swift
+//  FavoritesDetailsViewController.swift
 //  Vnavigate
 //
-//  Created by Dima Skvortsov on 04.02.2023.
+//  Created by Dima Skvortsov on 05.02.2023.
 //
 
 import UIKit
 
-final class HomePostDetailViewController: UIViewController {
+final class FavoritesDetailsViewController: UIViewController {
 
     private let post: Post
     private let avatar = CircularImageView()
@@ -87,7 +87,7 @@ final class HomePostDetailViewController: UIViewController {
         let like = post.isLike ? false : true
         post.setValue(like, forKey: "isLike")
         CoreDataManager.shared.save()
-        
+
         let likeImage = post.isLike ? "heart.fill" : "heart"
         likeIcon.image = UIImage(systemName: likeImage)
     }
@@ -97,9 +97,8 @@ final class HomePostDetailViewController: UIViewController {
         let favorite = post.isFavorite ? false : true
         post.setValue(favorite, forKey: "isFavorite")
         CoreDataManager.shared.save()
-        
-        let favoriteImage = post.isFavorite ? "bookmark.fill" : "bookmark"
-        favoriteIcon.image = UIImage(systemName: favoriteImage)
+
+        navigationController?.popViewController(animated: true)
     }
 
     private func setConstraints() {

@@ -46,10 +46,10 @@ final class CoreDataManager {
         }
         return fetchedAuthors
     }
-    
+
     func fetchFriends() -> [Author] {
         let request: NSFetchRequest<Author> = Author.fetchRequest()
-        request.predicate = NSPredicate(format: "isFriend = %@", "true")
+        request.predicate = NSPredicate(format: "isFriend = %d", true)
         request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         var fetchedPosts: [Author] = []
 
@@ -64,6 +64,20 @@ final class CoreDataManager {
     func fetchPostsToAuthor(author: Author) -> [Post] {
         let request: NSFetchRequest<Post> = Post.fetchRequest()
         request.predicate = NSPredicate(format: "author = %@", author)
+        request.sortDescriptors = [NSSortDescriptor(key: "article", ascending: true)]
+        var fetchedPosts: [Post] = []
+
+        do {
+            fetchedPosts = try persistentContainer.viewContext.fetch(request)
+        } catch let error {
+            print("Error fetched author posts \(error)")
+        }
+        return fetchedPosts
+    }
+
+    func fetchFavoritesPost() -> [Post] {
+        let request: NSFetchRequest<Post> = Post.fetchRequest()
+        request.predicate = NSPredicate(format: "isFavorite = %d", true)
         request.sortDescriptors = [NSSortDescriptor(key: "article", ascending: true)]
         var fetchedPosts: [Post] = []
 

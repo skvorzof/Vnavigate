@@ -1,15 +1,24 @@
 //
-//  HomePostDetailViewController.swift
+//  FavoritesCell.swift
 //  Vnavigate
 //
-//  Created by Dima Skvortsov on 04.02.2023.
+//  Created by Dima Skvortsov on 05.02.2023.
 //
 
 import UIKit
 
-final class HomePostDetailViewController: UIViewController {
+protocol FavoritesCellDelegate: AnyObject {
+    func didTapArticle(post: Post)
+    func didTapIsLike(post: Post)
+    func didTapIsFavorite(post: Post)
+}
 
-    private let post: Post
+final class FavoritesCell: UICollectionViewCell {
+
+    weak var delegate: FavoritesCellDelegate?
+
+    private var post: Post?
+
     private let avatar = CircularImageView()
     private let name = UILabel()
 
@@ -30,18 +39,8 @@ final class HomePostDetailViewController: UIViewController {
     private let likeIcon = UIImageView()
     private let favoriteIcon = UIImageView()
 
-    init(post: Post) {
-        self.post = post
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
 
         setSubviews(avatar, name, profession, thumbnail, article, likeIcon, favoriteIcon)
         setUI()
@@ -49,21 +48,24 @@ final class HomePostDetailViewController: UIViewController {
         setConstraints()
     }
 
-    private func setSubviews(_ subviews: UIView...) {
-        subviews.forEach { subview in
-            subview.translatesAutoresizingMaskIntoConstraints = false
-            view.addSubview(subview)
-        }
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
-    private func setUI() {
-        view.backgroundColor = .systemBackground
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        likeIcon.image = nil
+        favoriteIcon.image = nil
+    }
 
+    func configure(post: Post) {
+        self.post = post
         avatar.image = UIImage(named: post.author?.avatar ?? "")
         name.text = post.author?.name
         profession.text = post.author?.profession
         thumbnail.image = UIImage(named: post.thumbnail ?? "")
-        article.text = post.article
+        article.text = post.article?.limitedText(to: 120)
 
         let likeImage = post.isLike ? "heart.fill" : "heart"
         likeIcon.image = UIImage(systemName: likeImage)
@@ -72,7 +74,22 @@ final class HomePostDetailViewController: UIViewController {
         favoriteIcon.image = UIImage(systemName: favoriteImage)
     }
 
+    private func setSubviews(_ subviews: UIView...) {
+        subviews.forEach { subview in
+            subview.translatesAutoresizingMaskIntoConstraints = false
+            addSubview(subview)
+        }
+    }
+
+    private func setUI() {
+        backgroundColor = .systemBackground
+    }
+
     private func setGesture() {
+        let tapArticleGesture = UITapGestureRecognizer(target: self, action: #selector(didTapArticle))
+        article.addGestureRecognizer(tapArticleGesture)
+        article.isUserInteractionEnabled = true
+
         let tapIsLikeGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsLike))
         likeIcon.addGestureRecognizer(tapIsLikeGesture)
         likeIcon.isUserInteractionEnabled = true
@@ -83,31 +100,29 @@ final class HomePostDetailViewController: UIViewController {
     }
 
     @objc
+    private func didTapArticle() {
+        guard let post = post else { return }
+        delegate?.didTapArticle(post: post)
+    }
+
+    @objc
     private func didTapIsLike() {
-        let like = post.isLike ? false : true
-        post.setValue(like, forKey: "isLike")
-        CoreDataManager.shared.save()
-        
-        let likeImage = post.isLike ? "heart.fill" : "heart"
-        likeIcon.image = UIImage(systemName: likeImage)
+        guard let post = post else { return }
+        delegate?.didTapIsLike(post: post)
     }
 
     @objc
     private func didTapIsFavorite() {
-        let favorite = post.isFavorite ? false : true
-        post.setValue(favorite, forKey: "isFavorite")
-        CoreDataManager.shared.save()
-        
-        let favoriteImage = post.isFavorite ? "bookmark.fill" : "bookmark"
-        favoriteIcon.image = UIImage(systemName: favoriteImage)
+        guard let post = post else { return }
+        delegate?.didTapIsFavorite(post: post)
     }
 
     private func setConstraints() {
         NSLayoutConstraint.activate([
             avatar.widthAnchor.constraint(equalToConstant: 60),
             avatar.heightAnchor.constraint(equalToConstant: 60),
-            avatar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            avatar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            avatar.topAnchor.constraint(equalTo: topAnchor),
+            avatar.leadingAnchor.constraint(equalTo: leadingAnchor),
 
             name.topAnchor.constraint(equalTo: avatar.topAnchor, constant: 7),
             name.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 10),
@@ -117,22 +132,22 @@ final class HomePostDetailViewController: UIViewController {
 
             thumbnail.heightAnchor.constraint(equalToConstant: 200),
             thumbnail.topAnchor.constraint(equalTo: profession.bottomAnchor, constant: 20),
-            thumbnail.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            thumbnail.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            thumbnail.leadingAnchor.constraint(equalTo: leadingAnchor),
+            thumbnail.trailingAnchor.constraint(equalTo: trailingAnchor),
 
             article.topAnchor.constraint(equalTo: thumbnail.bottomAnchor, constant: 10),
-            article.leadingAnchor.constraint(equalTo: thumbnail.leadingAnchor),
-            article.trailingAnchor.constraint(equalTo: thumbnail.trailingAnchor),
+            article.leadingAnchor.constraint(equalTo: leadingAnchor),
+            article.trailingAnchor.constraint(equalTo: trailingAnchor),
 
             likeIcon.widthAnchor.constraint(equalToConstant: 28),
             likeIcon.heightAnchor.constraint(equalToConstant: 28),
             likeIcon.topAnchor.constraint(equalTo: article.bottomAnchor, constant: 7),
-            likeIcon.leadingAnchor.constraint(equalTo: article.leadingAnchor),
+            likeIcon.leadingAnchor.constraint(equalTo: leadingAnchor),
 
             favoriteIcon.widthAnchor.constraint(equalToConstant: 25),
             favoriteIcon.heightAnchor.constraint(equalToConstant: 25),
             favoriteIcon.topAnchor.constraint(equalTo: article.bottomAnchor, constant: 10),
-            favoriteIcon.trailingAnchor.constraint(equalTo: article.trailingAnchor),
+            favoriteIcon.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
     }
 }
