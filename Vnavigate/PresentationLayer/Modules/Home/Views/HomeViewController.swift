@@ -47,6 +47,11 @@ final class HomeViewController: UIViewController {
         configureViewModel()
         viewModel.changeState(.initial)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
+    }
 
     private func configureViewModel() {
         viewModel.updateState = { [weak self] state in
@@ -95,23 +100,28 @@ final class HomeViewController: UIViewController {
 // MARK: - HomeFriendCellDelegate
 extension HomeViewController: HomeFriendCellDelegate {
     func didTapAvatar(author: Author) {
-        print("didTapAvatar \(author.name ?? "")")
+        coordinator.coordinateToHomeAuthorProfile(author: author)
     }
 }
 
 // MARK: - HomePostCellDelegate
 extension HomeViewController: HomePostCellDelegate {
     func didTapArticle(post: Post) {
-        print("didTapArticle \(post.article ?? "")")
+        coordinator.coordinateToHomePostDetail(post: post)
     }
-    
+
     func didTapIsLike(post: Post) {
-        print("didTapIsLike \(post.isLike)")
+        let isLike = post.isLike ? false : true
+        post.setValue(isLike, forKey: "isLike")
+        CoreDataManager.shared.save()
+        collectionView.reloadData()
     }
-    
+
     func didTapIsFavorite(post: Post) {
-        print("didTapIsFavorite \(post.isFavorites)")
+        let isFavorite = post.isFavorite ? false : true
+        post.setValue(isFavorite, forKey: "isFavorite")
+        CoreDataManager.shared.save()
+        collectionView.reloadData()
     }
-    
-    
+
 }

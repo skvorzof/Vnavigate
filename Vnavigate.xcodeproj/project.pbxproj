@@ -35,6 +35,7 @@
 		467F5B7E298D3A30007D4E4A /* HomeFriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B7D298D3A30007D4E4A /* HomeFriendCell.swift */; };
 		467F5B80298D3B59007D4E4A /* HomeCompositionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B7F298D3B59007D4E4A /* HomeCompositionalLayout.swift */; };
 		467F5B82298D3F9B007D4E4A /* HomePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B81298D3F9B007D4E4A /* HomePostCell.swift */; };
+		467F5B86298EE16D007D4E4A /* HomePostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B85298EE16D007D4E4A /* HomePostDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +69,7 @@
 		467F5B7D298D3A30007D4E4A /* HomeFriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFriendCell.swift; sourceTree = "<group>"; };
 		467F5B7F298D3B59007D4E4A /* HomeCompositionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCompositionalLayout.swift; sourceTree = "<group>"; };
 		467F5B81298D3F9B007D4E4A /* HomePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCell.swift; sourceTree = "<group>"; };
+		467F5B85298EE16D007D4E4A /* HomePostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				467F5B77298D2330007D4E4A /* HomeViewController.swift */,
+				467F5B85298EE16D007D4E4A /* HomePostDetailViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				467F5B86298EE16D007D4E4A /* HomePostDetailViewController.swift in Sources */,
 				467F5B51298D1BE1007D4E4A /* CoreDataManager.swift in Sources */,
 				467F5B74298D2255007D4E4A /* HomeViewModel.swift in Sources */,
 				467F5B7A298D3543007D4E4A /* Typealiases.swift in Sources */,

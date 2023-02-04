@@ -14,7 +14,7 @@
     </entity>
     <entity name="Post" representedClassName="Post" syncable="YES" codeGenerationType="class">
         <attribute name="article" optional="YES" attributeType="String"/>
-        <attribute name="isFavorites" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isLike" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="thumbnail" optional="YES" attributeType="String"/>
         <relationship name="author" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Author" inverseName="posts" inverseEntity="Author"/>

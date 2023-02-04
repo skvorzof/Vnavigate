@@ -30,7 +30,7 @@ final class PreloadData {
         let thumbnail: String
         let article: String
         let isLike: Bool
-        let isFavorites: Bool
+        let isFavorite: Bool
     }
 
     func preloadData() {
@@ -62,7 +62,7 @@ final class PreloadData {
                     post.thumbnail = jsonPost.thumbnail
                     post.article = jsonPost.article
                     post.isLike = jsonPost.isLike
-                    post.isFavorites = jsonPost.isFavorites
+                    post.isFavorite = jsonPost.isFavorite
                     post.author = author
                 }
 

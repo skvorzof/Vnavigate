@@ -28,9 +28,9 @@ final class CoreDataManager {
         return author
     }
 
-    func savePost(article: String, author: Author) -> Post {
-        let post = Post(context: persistentContainer.viewContext)
-        post.article = article
+    func savePost(article: Post, author: Author) -> Post {
+        var post = Post(context: persistentContainer.viewContext)
+        post = article
         author.addToPosts(post)
         return post
     }
