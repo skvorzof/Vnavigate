@@ -86,6 +86,10 @@ final class FavoritesCell: UICollectionViewCell {
     }
 
     private func setGesture() {
+        let tapThumbnailGesture = UITapGestureRecognizer(target: self, action: #selector(didTapArticle))
+        thumbnail.addGestureRecognizer(tapThumbnailGesture)
+        thumbnail.isUserInteractionEnabled = true
+        
         let tapArticleGesture = UITapGestureRecognizer(target: self, action: #selector(didTapArticle))
         article.addGestureRecognizer(tapArticleGesture)
         article.isUserInteractionEnabled = true

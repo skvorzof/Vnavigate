@@ -73,6 +73,8 @@ class FavoritesViewController: UIViewController {
 
     // MARK: - configureColletionView
     private func configureColletionView() {
+        collectionView.backgroundColor = .systemBackground
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(collectionView)
 
         let favoritesCellRegistration = UICollectionView.CellRegistration<FavoritesCell, Post> { cell, indexPath, post in

@@ -50,6 +50,7 @@ final class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.changeState(.initial)
         collectionView.reloadData()
     }
 
@@ -72,6 +73,8 @@ final class HomeViewController: UIViewController {
     }
 
     private func configureColletionView() {
+        collectionView.backgroundColor = .systemBackground
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(collectionView)
 
         let homeFriendCellRegistration = UICollectionView.CellRegistration<HomeFriendCell, Author> { cell, indexPath, author in
@@ -99,13 +102,17 @@ final class HomeViewController: UIViewController {
 
 // MARK: - HomeFriendCellDelegate
 extension HomeViewController: HomeFriendCellDelegate {
-    func didTapAvatar(author: Author) {
+    func didTapFriendAvatar(author: Author) {
         coordinator.coordinateToHomeAuthorProfile(author: author)
     }
 }
 
 // MARK: - HomePostCellDelegate
 extension HomeViewController: HomePostCellDelegate {
+    func didTapAvatar(author: Author) {
+        coordinator.coordinateToHomeAuthorProfile(author: author)
+    }
+    
     func didTapArticle(post: Post) {
         coordinator.coordinateToHomePostDetail(post: post)
     }
@@ -123,5 +130,4 @@ extension HomeViewController: HomePostCellDelegate {
         CoreDataManager.shared.save()
         collectionView.reloadData()
     }
-
 }

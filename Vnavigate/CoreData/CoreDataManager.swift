@@ -35,36 +35,37 @@ final class CoreDataManager {
         return post
     }
 
-    func fetchAuthors() -> [Author] {
+    // MARK: - fetchAuthor
+    func fetchAuthor(authorId: String) -> Author? {
         let request: NSFetchRequest<Author> = Author.fetchRequest()
-        var fetchedAuthors: [Author] = []
+        request.fetchLimit = 1
+        request.predicate = NSPredicate(format: "authorId = %@", authorId)
 
         do {
-            fetchedAuthors = try persistentContainer.viewContext.fetch(request)
+            return try persistentContainer.viewContext.fetch(request).first
         } catch let error {
             print("Error feched authors \(error)")
+            return nil
         }
-        return fetchedAuthors
     }
 
     func fetchFriends() -> [Author] {
         let request: NSFetchRequest<Author> = Author.fetchRequest()
         request.predicate = NSPredicate(format: "isFriend = %d", true)
         request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        var fetchedPosts: [Author] = []
 
         do {
-            fetchedPosts = try persistentContainer.viewContext.fetch(request)
+            return try persistentContainer.viewContext.fetch(request)
         } catch let error {
             print("Error fetched author posts \(error)")
+            return []
         }
-        return fetchedPosts
     }
 
     func fetchPostsToAuthor(author: Author) -> [Post] {
         let request: NSFetchRequest<Post> = Post.fetchRequest()
         request.predicate = NSPredicate(format: "author = %@", author)
-        request.sortDescriptors = [NSSortDescriptor(key: "article", ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: "publishedAt", ascending: false)]
         var fetchedPosts: [Post] = []
 
         do {
@@ -75,10 +76,23 @@ final class CoreDataManager {
         return fetchedPosts
     }
 
+    func fetchPhotosToAuthor(author: Author) -> [Photo]? {
+        let request: NSFetchRequest<Photo> = Photo.fetchRequest()
+        request.predicate = NSPredicate(format: "author = %@", author)
+        request.sortDescriptors = [NSSortDescriptor(key: "image", ascending: true)]
+
+        do {
+            return try persistentContainer.viewContext.fetch(request)
+        } catch let error {
+            print("Error fetched author posts \(error)")
+            return nil
+        }
+    }
+
     func fetchFavoritesPost() -> [Post] {
         let request: NSFetchRequest<Post> = Post.fetchRequest()
         request.predicate = NSPredicate(format: "isFavorite = %d", true)
-        request.sortDescriptors = [NSSortDescriptor(key: "article", ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: "publishedAt", ascending: false)]
         var fetchedPosts: [Post] = []
 
         do {
@@ -91,6 +105,7 @@ final class CoreDataManager {
 
     func fetchAllPosts() -> [Post] {
         let request: NSFetchRequest<Post> = Post.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(key: "publishedAt", ascending: false)]
         var fetchedPosts: [Post] = []
 
         do {

@@ -32,6 +32,10 @@ final class HomeCoordinator {
     }
 
     func coordinateToHomeAuthorProfile(author: Author) {
-        print("coordinateToHomeAuthorProfile -> \(author.name)")
+        let profileViewModel = ProfileViewModel()
+        profileViewModel.defaultAuthor = author
+        let profileViewController = ProfileViewController(
+            coordinator: ProfileCoordinator(navigationController: navigationController), viewModel: profileViewModel)
+        navigationController.pushViewController(profileViewController, animated: true)
     }
 }

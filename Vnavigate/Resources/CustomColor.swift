@@ -9,6 +9,6 @@ import UIKit
 
 enum CustomColor {
     static let accent = UIColor(named: "AccentColor")
-    static let orange = UIColor(named: "Orange")
+    static let dark = UIColor(named: "Dark")
     static let gray = UIColor(named: "Gray")
 }

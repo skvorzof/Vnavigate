@@ -14,6 +14,7 @@ final class PreloadData {
     private init() {}
 
     struct JSONAuthor: Decodable {
+        let authorId: String
         let name: String
         let avatar: String
         let profession: String
@@ -27,6 +28,7 @@ final class PreloadData {
     }
 
     struct JSONPost: Decodable {
+        let publishedAt: String
         let thumbnail: String
         let article: String
         let isLike: Bool
@@ -39,13 +41,17 @@ final class PreloadData {
                 let jsonData = try String(contentsOfFile: pathData).data(using: .utf8)
             else { return }
 
-            guard let decodetedData = try? JSONDecoder().decode([JSONAuthor].self, from: jsonData) else { return }
+            guard let decodetedData = try? JSONDecoder().decode([JSONAuthor].self, from: jsonData) else {
+                print("Ошибка декодирования в preloadData")
+                return
+            }
 
             let privateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
             privateContext.parent = CoreDataManager.shared.persistentContainer.viewContext
 
             decodetedData.forEach { jsonAuthor in
                 let author = Author(context: privateContext)
+                author.authorId = jsonAuthor.authorId
                 author.avatar = jsonAuthor.avatar
                 author.name = jsonAuthor.name
                 author.profession = jsonAuthor.profession
@@ -59,6 +65,7 @@ final class PreloadData {
 
                 jsonAuthor.posts.forEach { jsonPost in
                     let post = Post(context: privateContext)
+                    post.publishedAt = jsonPost.publishedAt
                     post.thumbnail = jsonPost.thumbnail
                     post.article = jsonPost.article
                     post.isLike = jsonPost.isLike

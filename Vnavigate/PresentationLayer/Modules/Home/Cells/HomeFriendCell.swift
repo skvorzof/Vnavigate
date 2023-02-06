@@ -8,7 +8,7 @@
 import UIKit
 
 protocol HomeFriendCellDelegate: AnyObject {
-    func didTapAvatar(author: Author)
+    func didTapFriendAvatar(author: Author)
 }
 
 final class HomeFriendCell: UICollectionViewCell {
@@ -58,6 +58,6 @@ final class HomeFriendCell: UICollectionViewCell {
     @objc
     private func didTapAvatar() {
         guard let author = author else { return }
-        delegate?.didTapAvatar(author: author)
+        delegate?.didTapFriendAvatar(author: author)
     }
 }

@@ -11,7 +11,7 @@ final class TabCoordinator {
 
     private let tabBarController: UITabBarController
     private let homeCoordinator = HomeCoordinator(navigationController: UINavigationController())
-    //    private let profileCoordinator = ProfileCoordinator(navigationController: UINavigationController())
+    private let profileCoordinator = ProfileCoordinator(navigationController: UINavigationController())
     private let favoritesCoordinator = FavoritesCoordinator(navigationController: UINavigationController())
 
     init(tabBarController: UITabBarController) {
@@ -19,16 +19,16 @@ final class TabCoordinator {
     }
 
     func start() {
-        tabBarController.tabBar.tintColor = CustomColor.orange
-        tabBarController.tabBar.unselectedItemTintColor = CustomColor.accent
+        tabBarController.tabBar.tintColor = CustomColor.accent
+        tabBarController.tabBar.unselectedItemTintColor = CustomColor.dark
 
         homeCoordinator.start()
-        //        profileCoordinator.start()
+        profileCoordinator.start()
         favoritesCoordinator.start()
 
         tabBarController.viewControllers = [
             homeCoordinator.navigationController,
-            //            profileCoordinator.navigationController,
+            profileCoordinator.navigationController,
             favoritesCoordinator.navigationController,
         ]
     }

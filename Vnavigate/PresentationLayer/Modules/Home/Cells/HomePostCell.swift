@@ -8,6 +8,7 @@
 import UIKit
 
 protocol HomePostCellDelegate: AnyObject {
+    func didTapAvatar(author: Author)
     func didTapArticle(post: Post)
     func didTapIsLike(post: Post)
     func didTapIsFavorite(post: Post)
@@ -86,6 +87,14 @@ final class HomePostCell: UICollectionViewCell {
     }
 
     private func setGesture() {
+        let tapAvatarGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
+        avatar.addGestureRecognizer(tapAvatarGesture)
+        avatar.isUserInteractionEnabled = true
+        
+        let tapThumbnailGesture = UITapGestureRecognizer(target: self, action: #selector(didTapArticle))
+        thumbnail.addGestureRecognizer(tapThumbnailGesture)
+        thumbnail.isUserInteractionEnabled = true
+        
         let tapArticleGesture = UITapGestureRecognizer(target: self, action: #selector(didTapArticle))
         article.addGestureRecognizer(tapArticleGesture)
         article.isUserInteractionEnabled = true
@@ -97,6 +106,12 @@ final class HomePostCell: UICollectionViewCell {
         let tapIsFavoriteGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsFavorite))
         favoriteIcon.addGestureRecognizer(tapIsFavoriteGesture)
         favoriteIcon.isUserInteractionEnabled = true
+    }
+    
+    @objc
+    private func didTapAvatar() {
+        guard let author = post?.author else { return }
+        delegate?.didTapAvatar(author: author)
     }
 
     @objc
