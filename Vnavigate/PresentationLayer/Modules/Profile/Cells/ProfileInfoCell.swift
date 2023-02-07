@@ -9,7 +9,7 @@ import UIKit
 
 protocol ProfileInfoCellDelegate: AnyObject {
     func didTapPhotosButton(author: Author)
-    func didTapSettingsButton()
+    func didTapOutButton()
 }
 
 class ProfileInfoCell: UICollectionViewCell {
@@ -34,10 +34,9 @@ class ProfileInfoCell: UICollectionViewCell {
         let button = UIButton()
         button.setTitle("Выйти из аккаунта", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        button.backgroundColor = CustomColor.accent
+        button.backgroundColor = CustomColor.gray
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(didTapEditButton), for: .touchUpInside)
         return button
     }()
 
@@ -162,7 +161,10 @@ class ProfileInfoCell: UICollectionViewCell {
         if author.authorId != "0" {
             let buttonText = author.isFriend ? "Удалить из друзей" : "Добавить в друзья"
             editButton.setTitle(buttonText, for: .normal)
+            editButton.backgroundColor = CustomColor.accent
             editButton.addTarget(self, action: #selector(addToFriend), for: .touchUpInside)
+        } else {
+            editButton.addTarget(self, action: #selector(didTapOutButton), for: .touchUpInside)
         }
     }
 
@@ -171,14 +173,6 @@ class ProfileInfoCell: UICollectionViewCell {
             subview.translatesAutoresizingMaskIntoConstraints = false
             addSubview(subview)
         }
-    }
-
-    @objc private func didTapSettingsButton() {
-        delegate?.didTapSettingsButton()
-    }
-
-    @objc private func didTapEditButton() {
-        delegate?.didTapSettingsButton()
     }
 
     @objc private func addToFriend() {
@@ -195,6 +189,10 @@ class ProfileInfoCell: UICollectionViewCell {
     @objc private func didTapPhotosButton() {
         guard let author = author else { return }
         delegate?.didTapPhotosButton(author: author)
+    }
+
+    @objc private func didTapOutButton() {
+        delegate?.didTapOutButton()
     }
 
     private func setConstraints() {

@@ -5,6 +5,7 @@
 //  Created by Dima Skvortsov on 03.02.2023.
 //
 
+import FirebaseAuth
 import UIKit
 
 final class AppCoordinator {
@@ -17,9 +18,11 @@ final class AppCoordinator {
     }
 
     func start() {
-
-        homeFlow()
-
+        if Auth.auth().currentUser?.uid != nil {
+            homeFlow()
+        } else {
+            authFlow()
+        }
     }
 
     func authFlow() {
@@ -27,8 +30,8 @@ final class AppCoordinator {
         window.rootViewController = rootViewController
 
         if let rootViewController = rootViewController as? UINavigationController {
-//            let authCoordinator = AuthCoordinator(navigationController: rootViewController)
-//            authCoordinator.start()
+            let authCoordinator = AuthCoordinator(navigationController: rootViewController)
+            authCoordinator.start()
         }
     }
 

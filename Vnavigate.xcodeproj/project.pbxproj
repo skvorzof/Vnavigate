@@ -42,6 +42,18 @@
 		46988E6F298F0515003ECEBD /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46988E6E298F0515003ECEBD /* FavoritesViewController.swift */; };
 		46988E71298F05A9003ECEBD /* FavoritesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46988E70298F05A9003ECEBD /* FavoritesCell.swift */; };
 		46988E73298F0BA4003ECEBD /* FavoritesDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46988E72298F0BA4003ECEBD /* FavoritesDetailsViewController.swift */; };
+		46A1A51329929831005A48B8 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A1A51229929831005A48B8 /* AuthCoordinator.swift */; };
+		46A1A5182992989A005A48B8 /* ConfirmLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A1A5172992989A005A48B8 /* ConfirmLoginViewModel.swift */; };
+		46A1A51A299298B0005A48B8 /* ConfirmRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A1A519299298B0005A48B8 /* ConfirmRegisterViewModel.swift */; };
+		46A1A51C299298CD005A48B8 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A1A51B299298CD005A48B8 /* AuthViewController.swift */; };
+		46A1A51E299298F1005A48B8 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A1A51D299298F1005A48B8 /* LoginViewController.swift */; };
+		46A1A52029929920005A48B8 /* ConfirmLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A1A51F29929920005A48B8 /* ConfirmLoginViewController.swift */; };
+		46A1A52229929945005A48B8 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A1A52129929945005A48B8 /* RegisterViewController.swift */; };
+		46A1A52429929963005A48B8 /* ConfirmRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A1A52329929963005A48B8 /* ConfirmRegisterViewController.swift */; };
+		46A1A52729929AAC005A48B8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 46A1A52629929AAC005A48B8 /* FirebaseAuth */; };
+		46A1A52B29929CE2005A48B8 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A1A52A29929CE2005A48B8 /* AuthService.swift */; };
+		46A1A52D29929D70005A48B8 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A1A52C29929D70005A48B8 /* CustomError.swift */; };
+		46A1A52F29929EFE005A48B8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46A1A52E29929EFE005A48B8 /* GoogleService-Info.plist */; };
 		46CB4B8D29910BCB00A7AD9C /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CB4B8C29910BCB00A7AD9C /* ProfileViewController.swift */; };
 		46CB4B8F29910C4300A7AD9C /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CB4B8E29910C4300A7AD9C /* ProfileViewModel.swift */; };
 		46CB4B9129910C7B00A7AD9C /* ProfileSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CB4B9029910C7B00A7AD9C /* ProfileSection.swift */; };
@@ -97,6 +109,17 @@
 		46988E6E298F0515003ECEBD /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		46988E70298F05A9003ECEBD /* FavoritesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCell.swift; sourceTree = "<group>"; };
 		46988E72298F0BA4003ECEBD /* FavoritesDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesDetailsViewController.swift; sourceTree = "<group>"; };
+		46A1A51229929831005A48B8 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
+		46A1A5172992989A005A48B8 /* ConfirmLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLoginViewModel.swift; sourceTree = "<group>"; };
+		46A1A519299298B0005A48B8 /* ConfirmRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmRegisterViewModel.swift; sourceTree = "<group>"; };
+		46A1A51B299298CD005A48B8 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		46A1A51D299298F1005A48B8 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		46A1A51F29929920005A48B8 /* ConfirmLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLoginViewController.swift; sourceTree = "<group>"; };
+		46A1A52129929945005A48B8 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		46A1A52329929963005A48B8 /* ConfirmRegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmRegisterViewController.swift; sourceTree = "<group>"; };
+		46A1A52A29929CE2005A48B8 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		46A1A52C29929D70005A48B8 /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
+		46A1A52E29929EFE005A48B8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		46CB4B8C29910BCB00A7AD9C /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		46CB4B8E29910C4300A7AD9C /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		46CB4B9029910C7B00A7AD9C /* ProfileSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSection.swift; sourceTree = "<group>"; };
@@ -119,6 +142,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46A1A52729929AAC005A48B8 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,8 +173,10 @@
 				467F5B4E298D1B9E007D4E4A /* CoreData */,
 				467F5B4F298D1BB1007D4E4A /* PresentationLayer */,
 				467F5B45298D1AB1007D4E4A /* Resources */,
+				46A1A52929929CC6005A48B8 /* Services */,
 				467F5B46298D1AE5007D4E4A /* Utilities */,
 				467F5B3E298D1A47007D4E4A /* Info.plist */,
+				46A1A52E29929EFE005A48B8 /* GoogleService-Info.plist */,
 			);
 			path = Vnavigate;
 			sourceTree = "<group>";
@@ -178,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				467F5B4B298D1B5B007D4E4A /* CircularImageView.swift */,
+				46A1A52C29929D70005A48B8 /* CustomError.swift */,
 				467F5B49298D1B2E007D4E4A /* PhoneNumberFofmatter.swift */,
 				467F5B47298D1B07007D4E4A /* State.swift */,
 				467F5B79298D3543007D4E4A /* Typealiases.swift */,
@@ -189,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				467F5B57298D1E98007D4E4A /* AppCoordinator.swift */,
+				46A1A51229929831005A48B8 /* AuthCoordinator.swift */,
 				467F5B61298D20A0007D4E4A /* FavoritesCoordinator.swift */,
 				467F5B5D298D201D007D4E4A /* HomeCoordinator.swift */,
 				467F5B5F298D206D007D4E4A /* ProfileCoordinator.swift */,
@@ -231,9 +259,10 @@
 		467F5B6C298D21AC007D4E4A /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				46CB4B8629910B4A00A7AD9C /* Profile */,
+				46A1A51429929867005A48B8 /* Auth */,
 				46988E62298F02B5003ECEBD /* Favorites */,
 				467F5B6D298D21C0007D4E4A /* Home */,
+				46CB4B8629910B4A00A7AD9C /* Profile */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -345,6 +374,44 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		46A1A51429929867005A48B8 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				46A1A5162992987D005A48B8 /* ViewModeld */,
+				46A1A51529929874005A48B8 /* Views */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		46A1A51529929874005A48B8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				46A1A51B299298CD005A48B8 /* AuthViewController.swift */,
+				46A1A51D299298F1005A48B8 /* LoginViewController.swift */,
+				46A1A51F29929920005A48B8 /* ConfirmLoginViewController.swift */,
+				46A1A52129929945005A48B8 /* RegisterViewController.swift */,
+				46A1A52329929963005A48B8 /* ConfirmRegisterViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		46A1A5162992987D005A48B8 /* ViewModeld */ = {
+			isa = PBXGroup;
+			children = (
+				46A1A5172992989A005A48B8 /* ConfirmLoginViewModel.swift */,
+				46A1A519299298B0005A48B8 /* ConfirmRegisterViewModel.swift */,
+			);
+			path = ViewModeld;
+			sourceTree = "<group>";
+		};
+		46A1A52929929CC6005A48B8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				46A1A52A29929CE2005A48B8 /* AuthService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		46CB4B8629910B4A00A7AD9C /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -423,6 +490,9 @@
 			dependencies = (
 			);
 			name = Vnavigate;
+			packageProductDependencies = (
+				46A1A52629929AAC005A48B8 /* FirebaseAuth */,
+			);
 			productName = Vnavigate;
 			productReference = 467F5B2D298D1A45007D4E4A /* Vnavigate.app */;
 			productType = "com.apple.product-type.application";
@@ -451,6 +521,9 @@
 				Base,
 			);
 			mainGroup = 467F5B24298D1A45007D4E4A;
+			packageReferences = (
+				46A1A52529929AAC005A48B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 467F5B2E298D1A45007D4E4A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -466,6 +539,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				467F5B3D298D1A47007D4E4A /* LaunchScreen.storyboard in Resources */,
+				46A1A52F29929EFE005A48B8 /* GoogleService-Info.plist in Resources */,
 				467F5B56298D1D8B007D4E4A /* preload.json in Resources */,
 				467F5B3A298D1A47007D4E4A /* Assets.xcassets in Resources */,
 			);
@@ -478,6 +552,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46A1A51A299298B0005A48B8 /* ConfirmRegisterViewModel.swift in Sources */,
 				46988E6D298F0418003ECEBD /* FavoritesViewModel.swift in Sources */,
 				46CB4BAB2991753100A7AD9C /* ProfilePhotoDeatilCell.swift in Sources */,
 				467F5B86298EE16D007D4E4A /* HomePostDetailViewController.swift in Sources */,
@@ -488,6 +563,7 @@
 				46CB4B9D29914FEF00A7AD9C /* ProfilePostDetailViewModel.swift in Sources */,
 				467F5B74298D2255007D4E4A /* HomeViewModel.swift in Sources */,
 				467F5B7A298D3543007D4E4A /* Typealiases.swift in Sources */,
+				46A1A52029929920005A48B8 /* ConfirmLoginViewController.swift in Sources */,
 				46CB4B992991232600A7AD9C /* ProfilePostCell.swift in Sources */,
 				46CB4B8D29910BCB00A7AD9C /* ProfileViewController.swift in Sources */,
 				467F5B5A298D1F1D007D4E4A /* TabCoordinator.swift in Sources */,
@@ -500,7 +576,11 @@
 				467F5B4A298D1B2E007D4E4A /* PhoneNumberFofmatter.swift in Sources */,
 				467F5B60298D206D007D4E4A /* ProfileCoordinator.swift in Sources */,
 				467F5B31298D1A45007D4E4A /* AppDelegate.swift in Sources */,
+				46A1A51329929831005A48B8 /* AuthCoordinator.swift in Sources */,
+				46A1A51E299298F1005A48B8 /* LoginViewController.swift in Sources */,
+				46A1A52D29929D70005A48B8 /* CustomError.swift in Sources */,
 				46CB4B9F299157A300A7AD9C /* ProfilePhotosViewContoller.swift in Sources */,
+				46A1A52229929945005A48B8 /* RegisterViewController.swift in Sources */,
 				46CB4B9B29914EF700A7AD9C /* ProfilePostDetailViewController.swift in Sources */,
 				467F5B76298D2298007D4E4A /* PreloadData.swift in Sources */,
 				46CB4BA329916D0C00A7AD9C /* ProfilePhotosDetailViewController.swift in Sources */,
@@ -508,6 +588,7 @@
 				467F5B58298D1E98007D4E4A /* AppCoordinator.swift in Sources */,
 				46CB4B952991201C00A7AD9C /* ProfileInfoCell.swift in Sources */,
 				467F5B7C298D3583007D4E4A /* HomeSection.swift in Sources */,
+				46A1A5182992989A005A48B8 /* ConfirmLoginViewModel.swift in Sources */,
 				467F5B65298D2139007D4E4A /* String+Extension.swift in Sources */,
 				467F5B69298D2169007D4E4A /* UIAlertController+Extension.swift in Sources */,
 				467F5B33298D1A45007D4E4A /* SceneDelegate.swift in Sources */,
@@ -518,6 +599,7 @@
 				467F5B7E298D3A30007D4E4A /* HomeFriendCell.swift in Sources */,
 				46988E6B298F03BC003ECEBD /* FavoritesSection.swift in Sources */,
 				46988E69298F0397003ECEBD /* FavoritesCompositionLayout.swift in Sources */,
+				46A1A51C299298CD005A48B8 /* AuthViewController.swift in Sources */,
 				467F5B5C298D1F61007D4E4A /* CustomColor.swift in Sources */,
 				467F5B48298D1B07007D4E4A /* State.swift in Sources */,
 				467F5B5E298D201D007D4E4A /* HomeCoordinator.swift in Sources */,
@@ -525,6 +607,8 @@
 				467F5B6B298D217E007D4E4A /* UICollectionView+Extension.swift in Sources */,
 				46988E6F298F0515003ECEBD /* FavoritesViewController.swift in Sources */,
 				467F5B82298D3F9B007D4E4A /* HomePostCell.swift in Sources */,
+				46A1A52429929963005A48B8 /* ConfirmRegisterViewController.swift in Sources */,
+				46A1A52B29929CE2005A48B8 /* AuthService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -730,6 +814,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		46A1A52529929AAC005A48B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		46A1A52629929AAC005A48B8 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 46A1A52529929AAC005A48B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		467F5B52298D1BFF007D4E4A /* CoreDataModel.xcdatamodeld */ = {

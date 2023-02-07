@@ -22,8 +22,8 @@ final class FavoritesCoordinator {
         navigationController.viewControllers = [favoritesViewController]
         navigationController.tabBarItem = UITabBarItem(
             title: nil,
-            image: UIImage(systemName: "heart"),
-            selectedImage: UIImage(systemName: "heart.fill"))
+            image: UIImage(systemName: "bookmark"),
+            selectedImage: UIImage(systemName: "bookmark.fill"))
     }
 
     func coordinateToFavoritesDetails(post: Post) {

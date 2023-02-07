@@ -5,6 +5,7 @@
 //  Created by Dima Skvortsov on 06.02.2023.
 //
 
+import FirebaseAuth
 import UIKit
 
 final class ProfileViewController: UIViewController {
@@ -111,16 +112,15 @@ final class ProfileViewController: UIViewController {
 
 // MARK: - ProfileInfoCellDelegate
 extension ProfileViewController: ProfileInfoCellDelegate {
-    func didTapSettingsButton() {
-        
+    func didTapOutButton() {
+        do {
+            try Auth.auth().signOut()
+            coordinator.coordinateToRoot()
+        } catch {}
     }
-    
+
     func didTapPhotosButton(author: Author) {
         coordinator.coordinateToProfilePhotos(author: author)
-    }
-    
-    func didTapsettingsButton() {
-        
     }
 }
 
