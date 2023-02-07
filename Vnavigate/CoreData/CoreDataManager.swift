@@ -35,6 +35,42 @@ final class CoreDataManager {
         return post
     }
 
+    // MARK: - fetch
+    func fetch<T>(_ model: T.Type, predicate: NSPredicate?, sortDescriptors: NSSortDescriptor?) -> [T] {
+        guard let model = model as? NSManagedObject.Type else { return [] }
+        let context = persistentContainer.viewContext
+
+        let request = model.fetchRequest()
+        request.predicate = predicate
+
+        if let sortDescriptors {
+            request.sortDescriptors = [sortDescriptors]
+        }
+
+        guard let fetchRequestResult = try? context.fetch(request),
+            let fetchedObjects = fetchRequestResult as? [T]
+        else { return [] }
+        return fetchedObjects
+    }
+
+    // MARK: - fetchWithAuthor
+    func fetchWithAuthor<T>(_ model: T.Type, author: Author, sortDescriptors: NSSortDescriptor?) -> [T] {
+        guard let model = model as? NSManagedObject.Type else { return [] }
+        let context = persistentContainer.viewContext
+
+        let request = model.fetchRequest()
+        request.predicate = NSPredicate(format: "author = %@", author)
+
+        if let sortDescriptors {
+            request.sortDescriptors = [sortDescriptors]
+        }
+
+        guard let fetchRequestResult = try? context.fetch(request),
+            let fetchedObjects = fetchRequestResult as? [T]
+        else { return [] }
+        return fetchedObjects
+    }
+
     // MARK: - fetchAuthor
     func fetchAuthor(authorId: String) -> Author? {
         let request: NSFetchRequest<Author> = Author.fetchRequest()
@@ -47,73 +83,6 @@ final class CoreDataManager {
             print("Error feched authors \(error)")
             return nil
         }
-    }
-
-    func fetchFriends() -> [Author] {
-        let request: NSFetchRequest<Author> = Author.fetchRequest()
-        request.predicate = NSPredicate(format: "isFriend = %d", true)
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-
-        do {
-            return try persistentContainer.viewContext.fetch(request)
-        } catch let error {
-            print("Error fetched author posts \(error)")
-            return []
-        }
-    }
-
-    func fetchPostsToAuthor(author: Author) -> [Post] {
-        let request: NSFetchRequest<Post> = Post.fetchRequest()
-        request.predicate = NSPredicate(format: "author = %@", author)
-        request.sortDescriptors = [NSSortDescriptor(key: "publishedAt", ascending: false)]
-        var fetchedPosts: [Post] = []
-
-        do {
-            fetchedPosts = try persistentContainer.viewContext.fetch(request)
-        } catch let error {
-            print("Error fetched author posts \(error)")
-        }
-        return fetchedPosts
-    }
-
-    func fetchPhotosToAuthor(author: Author) -> [Photo]? {
-        let request: NSFetchRequest<Photo> = Photo.fetchRequest()
-        request.predicate = NSPredicate(format: "author = %@", author)
-        request.sortDescriptors = [NSSortDescriptor(key: "image", ascending: true)]
-
-        do {
-            return try persistentContainer.viewContext.fetch(request)
-        } catch let error {
-            print("Error fetched author posts \(error)")
-            return nil
-        }
-    }
-
-    func fetchFavoritesPost() -> [Post] {
-        let request: NSFetchRequest<Post> = Post.fetchRequest()
-        request.predicate = NSPredicate(format: "isFavorite = %d", true)
-        request.sortDescriptors = [NSSortDescriptor(key: "publishedAt", ascending: false)]
-        var fetchedPosts: [Post] = []
-
-        do {
-            fetchedPosts = try persistentContainer.viewContext.fetch(request)
-        } catch let error {
-            print("Error fetched author posts \(error)")
-        }
-        return fetchedPosts
-    }
-
-    func fetchAllPosts() -> [Post] {
-        let request: NSFetchRequest<Post> = Post.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(key: "publishedAt", ascending: false)]
-        var fetchedPosts: [Post] = []
-
-        do {
-            fetchedPosts = try persistentContainer.viewContext.fetch(request)
-        } catch let error {
-            print("Error fetched posts \(error)")
-        }
-        return fetchedPosts
     }
 
     func save() {

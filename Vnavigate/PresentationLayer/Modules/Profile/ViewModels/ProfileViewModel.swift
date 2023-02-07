@@ -13,7 +13,7 @@ final class ProfileViewModel {
     var dataSourceSnapshot = ProfileDiffableSnapshot()
 
     var updateState: ((State) -> Void)?
-    
+
     var defaultAuthor: Author?
 
     private(set) var state: State = .initial {

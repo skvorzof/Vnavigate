@@ -10,7 +10,6 @@ import Foundation
 final class FavoritesViewModel {
 
     var dataSourceSnapshot = FavoritesDiffableSnapshot()
-    var posts: [Post] = []
 
     var updateState: ((State) -> Void)?
 
@@ -25,7 +24,9 @@ final class FavoritesViewModel {
         case .initial:
             state = .loading
 
-            posts = CoreDataManager.shared.fetchFavoritesPost()
+            let favoritePredicate = NSPredicate(format: "isFavorite = %d", true)
+            let favoriteSort = NSSortDescriptor(key: "publishedAt", ascending: false)
+            let posts = CoreDataManager.shared.fetch(Post.self, predicate: favoritePredicate, sortDescriptors: favoriteSort)
 
             dataSourceSnapshot = makeSnaphot(posts: posts)
 

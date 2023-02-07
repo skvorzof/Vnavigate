@@ -9,7 +9,6 @@ final class ProfilePhotosViewModel {
 
     let author: Author
     var photos: [Photo] = []
-    
 
     var updateState: ((State) -> Void)?
 
@@ -18,7 +17,7 @@ final class ProfilePhotosViewModel {
             updateState?(state)
         }
     }
-    
+
     init(author: Author) {
         self.author = author
     }
@@ -28,10 +27,7 @@ final class ProfilePhotosViewModel {
         case .initial:
             state = .loading
 
-            guard let photos = CoreDataManager.shared.fetchPhotosToAuthor(author: author) else { return }
-            self.photos = photos
-
-            
+            photos = CoreDataManager.shared.fetchWithAuthor(Photo.self, author: author, sortDescriptors: nil)
 
             state = .loaded
         }
