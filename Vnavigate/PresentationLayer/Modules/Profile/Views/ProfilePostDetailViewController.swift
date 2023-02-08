@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfilePostDetailViewController: UIViewController {
+final class ProfilePostDetailViewController: UIViewController {
 
     private let viewModel: ProfilePostDetailViewModel
 
@@ -27,6 +27,7 @@ class ProfilePostDetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -58,23 +59,14 @@ class ProfilePostDetailViewController: UIViewController {
             view.addSubview(subview)
         }
     }
-    
-    private func setGesture() {
-        let tapIsLikeGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsLike))
-        likeIcon.addGestureRecognizer(tapIsLikeGesture)
-        likeIcon.isUserInteractionEnabled = true
 
-        let tapIsFavoriteGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsFavorite))
-        favoriteIcon.addGestureRecognizer(tapIsFavoriteGesture)
-        favoriteIcon.isUserInteractionEnabled = true
-    }
-
+    // MARK: - Actions
     @objc
     private func didTapIsLike() {
         let like = viewModel.post.isLike ? false : true
         viewModel.post.setValue(like, forKey: "isLike")
         CoreDataManager.shared.save()
-        
+
         let likeImage = viewModel.post.isLike ? "heart.fill" : "heart"
         likeIcon.image = UIImage(systemName: likeImage)
     }
@@ -84,11 +76,27 @@ class ProfilePostDetailViewController: UIViewController {
         let favorite = viewModel.post.isFavorite ? false : true
         viewModel.post.setValue(favorite, forKey: "isFavorite")
         CoreDataManager.shared.save()
-        
+
         let favoriteImage = viewModel.post.isFavorite ? "bookmark.fill" : "bookmark"
         favoriteIcon.image = UIImage(systemName: favoriteImage)
     }
+}
 
+// MARK: - GestureRecognizer
+extension ProfilePostDetailViewController {
+    private func setGesture() {
+        let tapIsLikeGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsLike))
+        likeIcon.addGestureRecognizer(tapIsLikeGesture)
+        likeIcon.isUserInteractionEnabled = true
+
+        let tapIsFavoriteGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsFavorite))
+        favoriteIcon.addGestureRecognizer(tapIsFavoriteGesture)
+        favoriteIcon.isUserInteractionEnabled = true
+    }
+}
+
+// MARK: - Set constraints
+extension ProfilePostDetailViewController {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             thumbnail.heightAnchor.constraint(equalToConstant: 200),

@@ -57,6 +57,7 @@ final class LoginViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -76,27 +77,7 @@ final class LoginViewController: UIViewController {
         }
     }
 
-    private func setConstraints() {
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 100),
-            descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-
-            phoneField.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 10),
-            phoneField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            phoneField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            phoneField.heightAnchor.constraint(equalToConstant: 50),
-
-            sendButton.topAnchor.constraint(equalTo: phoneField.bottomAnchor, constant: 70),
-            sendButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            sendButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            sendButton.heightAnchor.constraint(equalToConstant: 50),
-        ])
-    }
-
+    // MARK: - Actions
     @objc private func didTapsendButton() {
         if let text = phoneField.text, !text.isEmpty {
             AuthService.shared.startAuth(phoneNumber: text) { [weak self] result in
@@ -118,5 +99,29 @@ extension LoginViewController: UITextFieldDelegate {
         let newString = (text as NSString).replacingCharacters(in: range, with: string)
         textField.text = PhoneNumberFofmatter.shared.formatter(mask: "+# (###) ###-##-##", phoneNumber: newString)
         return false
+    }
+}
+
+// MARK: - Set constraints
+extension LoginViewController {
+    private func setConstraints() {
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 100),
+            descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+
+            phoneField.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 10),
+            phoneField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            phoneField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+            phoneField.heightAnchor.constraint(equalToConstant: 50),
+
+            sendButton.topAnchor.constraint(equalTo: phoneField.bottomAnchor, constant: 70),
+            sendButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            sendButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+            sendButton.heightAnchor.constraint(equalToConstant: 50),
+        ])
     }
 }

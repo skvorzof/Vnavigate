@@ -23,7 +23,7 @@ final class ProfileViewController: UIViewController {
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(
-            frame: view.bounds,
+            frame: .zero,
             collectionViewLayout: ProfileCompositionalLayout { [weak self] in
                 self?.viewModel.dataSourceSnapshot.sectionIdentifiers[$0].layoutType ?? .infoLayout
             })
@@ -45,6 +45,7 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
 
         configureColletionView()
+        setConstraints()
         configureVewModel()
         viewModel.changeState(.initial)
     }
@@ -77,6 +78,7 @@ final class ProfileViewController: UIViewController {
     private func configureColletionView() {
         collectionView.backgroundColor = .systemBackground
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
 
         let profileInfoCellRegistration = UICollectionView.CellRegistration<ProfileInfoCell, Author> { cell, indexPath, author in
@@ -115,8 +117,10 @@ extension ProfileViewController: ProfileInfoCellDelegate {
     func didTapOutButton() {
         do {
             try Auth.auth().signOut()
-            coordinator.coordinateToRoot()
-        } catch {}
+            coordinator.coordinateToSignOut()
+        } catch let error {
+            navigationController?.showAlert(with: "Ошибка", and: error.localizedDescription)
+        }
     }
 
     func didTapPhotosButton(author: Author) {
@@ -148,5 +152,17 @@ extension ProfileViewController: ProfilePostCellDelegate {
         post.setValue(isFavorite, forKey: "isFavorite")
         CoreDataManager.shared.save()
         collectionView.reloadData()
+    }
+}
+
+// MARK: - setConstraints
+extension ProfileViewController {
+    private func setConstraints() {
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
     }
 }

@@ -47,7 +47,7 @@ final class HomeViewController: UIViewController {
         configureViewModel()
         viewModel.changeState(.initial)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.changeState(.initial)
@@ -72,6 +72,7 @@ final class HomeViewController: UIViewController {
         }
     }
 
+    // MARK: - configureColletionView
     private func configureColletionView() {
         collectionView.backgroundColor = .systemBackground
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -112,7 +113,7 @@ extension HomeViewController: HomePostCellDelegate {
     func didTapAvatar(author: Author) {
         coordinator.coordinateToHomeAuthorProfile(author: author)
     }
-    
+
     func didTapArticle(post: Post) {
         coordinator.coordinateToHomePostDetail(post: post)
     }

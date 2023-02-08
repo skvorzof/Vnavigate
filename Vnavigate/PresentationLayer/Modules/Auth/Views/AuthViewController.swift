@@ -43,6 +43,7 @@ final class AuthViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -61,6 +62,18 @@ final class AuthViewController: UIViewController {
         }
     }
 
+    // MARK: - Actions
+    @objc private func didTapRegisterButton() {
+        coordinator.coordinateToRegister()
+    }
+
+    @objc private func didTapLoginButton() {
+        coordinator.coordinateToLogin()
+    }
+}
+
+// MARK: - Set constraints
+extension AuthViewController {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             bannerImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
@@ -74,13 +87,5 @@ final class AuthViewController: UIViewController {
             authButton.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 30),
             authButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
-    }
-
-    @objc private func didTapRegisterButton() {
-        coordinator.coordinateToRegister()
-    }
-
-    @objc private func didTapLoginButton() {
-        coordinator.coordinateToLogin()
     }
 }

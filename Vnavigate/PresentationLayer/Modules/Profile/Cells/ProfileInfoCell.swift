@@ -12,7 +12,7 @@ protocol ProfileInfoCellDelegate: AnyObject {
     func didTapOutButton()
 }
 
-class ProfileInfoCell: UICollectionViewCell {
+final class ProfileInfoCell: UICollectionViewCell {
 
     weak var delegate: ProfileInfoCellDelegate?
     private var author: Author?
@@ -147,6 +147,7 @@ class ProfileInfoCell: UICollectionViewCell {
         setConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -175,6 +176,7 @@ class ProfileInfoCell: UICollectionViewCell {
         }
     }
 
+    // MARK: - Actions
     @objc private func addToFriend() {
         if let author {
             let friend = author.isFriend ? false : true
@@ -194,7 +196,10 @@ class ProfileInfoCell: UICollectionViewCell {
     @objc private func didTapOutButton() {
         delegate?.didTapOutButton()
     }
+}
 
+// MARK: - Set constraints
+extension ProfileInfoCell {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             avatar.widthAnchor.constraint(equalToConstant: 60),
@@ -233,5 +238,4 @@ class ProfileInfoCell: UICollectionViewCell {
             photosButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
         ])
     }
-
 }

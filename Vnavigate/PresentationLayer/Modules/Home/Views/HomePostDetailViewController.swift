@@ -72,22 +72,13 @@ final class HomePostDetailViewController: UIViewController {
         favoriteIcon.image = UIImage(systemName: favoriteImage)
     }
 
-    private func setGesture() {
-        let tapIsLikeGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsLike))
-        likeIcon.addGestureRecognizer(tapIsLikeGesture)
-        likeIcon.isUserInteractionEnabled = true
-
-        let tapIsFavoriteGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsFavorite))
-        favoriteIcon.addGestureRecognizer(tapIsFavoriteGesture)
-        favoriteIcon.isUserInteractionEnabled = true
-    }
-
+    // MARK: - Actions
     @objc
     private func didTapIsLike() {
         let like = post.isLike ? false : true
         post.setValue(like, forKey: "isLike")
         CoreDataManager.shared.save()
-        
+
         let likeImage = post.isLike ? "heart.fill" : "heart"
         likeIcon.image = UIImage(systemName: likeImage)
     }
@@ -97,11 +88,28 @@ final class HomePostDetailViewController: UIViewController {
         let favorite = post.isFavorite ? false : true
         post.setValue(favorite, forKey: "isFavorite")
         CoreDataManager.shared.save()
-        
+
         let favoriteImage = post.isFavorite ? "bookmark.fill" : "bookmark"
         favoriteIcon.image = UIImage(systemName: favoriteImage)
     }
 
+}
+
+// MARK: - GestureRecognizer
+extension HomePostDetailViewController {
+    private func setGesture() {
+        let tapIsLikeGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsLike))
+        likeIcon.addGestureRecognizer(tapIsLikeGesture)
+        likeIcon.isUserInteractionEnabled = true
+
+        let tapIsFavoriteGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsFavorite))
+        favoriteIcon.addGestureRecognizer(tapIsFavoriteGesture)
+        favoriteIcon.isUserInteractionEnabled = true
+    }
+}
+
+// MARK: - Set constraints
+extension HomePostDetailViewController {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             avatar.widthAnchor.constraint(equalToConstant: 60),

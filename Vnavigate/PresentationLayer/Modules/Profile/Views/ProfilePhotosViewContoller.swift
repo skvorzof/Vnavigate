@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfilePhotosViewContoller: UIViewController {
+final class ProfilePhotosViewContoller: UIViewController {
 
     private let coordinator: ProfileCoordinator
     private let viewModel: ProfilePhotosViewModel
@@ -39,8 +39,8 @@ class ProfilePhotosViewContoller: UIViewController {
         collectionView.backgroundColor = .systemBackground
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(collectionView)
-//        collectionView.register(cellType: ProfilePhotoCell.self)
-        collectionView.register(ProfilePhotoDeatilCell.self, forCellWithReuseIdentifier: "ProfilePhotoDeatilCell")
+
+        collectionView.register(ProfilePhotoDetailCell.self, forCellWithReuseIdentifier: "ProfilePhotoDeatilCell")
         collectionView.dataSource = self
         collectionView.delegate = self
 
@@ -62,7 +62,7 @@ extension ProfilePhotosViewContoller: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfilePhotoDeatilCell", for: indexPath) as! ProfilePhotoDeatilCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfilePhotoDeatilCell", for: indexPath) as! ProfilePhotoDetailCell
         let photo = viewModel.photos[indexPath.item]
         cell.configure(photo: photo)
         return cell

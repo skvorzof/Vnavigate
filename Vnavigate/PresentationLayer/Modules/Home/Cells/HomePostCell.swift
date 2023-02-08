@@ -86,28 +86,7 @@ final class HomePostCell: UICollectionViewCell {
         backgroundColor = .systemBackground
     }
 
-    private func setGesture() {
-        let tapAvatarGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
-        avatar.addGestureRecognizer(tapAvatarGesture)
-        avatar.isUserInteractionEnabled = true
-        
-        let tapThumbnailGesture = UITapGestureRecognizer(target: self, action: #selector(didTapArticle))
-        thumbnail.addGestureRecognizer(tapThumbnailGesture)
-        thumbnail.isUserInteractionEnabled = true
-        
-        let tapArticleGesture = UITapGestureRecognizer(target: self, action: #selector(didTapArticle))
-        article.addGestureRecognizer(tapArticleGesture)
-        article.isUserInteractionEnabled = true
-
-        let tapIsLikeGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsLike))
-        likeIcon.addGestureRecognizer(tapIsLikeGesture)
-        likeIcon.isUserInteractionEnabled = true
-
-        let tapIsFavoriteGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsFavorite))
-        favoriteIcon.addGestureRecognizer(tapIsFavoriteGesture)
-        favoriteIcon.isUserInteractionEnabled = true
-    }
-    
+    // MARK: - Actions
     @objc
     private func didTapAvatar() {
         guard let author = post?.author else { return }
@@ -132,6 +111,35 @@ final class HomePostCell: UICollectionViewCell {
         delegate?.didTapIsFavorite(post: post)
     }
 
+}
+
+// MARK: - GestureRecognizer
+extension HomePostCell {
+    private func setGesture() {
+        let tapAvatarGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
+        avatar.addGestureRecognizer(tapAvatarGesture)
+        avatar.isUserInteractionEnabled = true
+
+        let tapThumbnailGesture = UITapGestureRecognizer(target: self, action: #selector(didTapArticle))
+        thumbnail.addGestureRecognizer(tapThumbnailGesture)
+        thumbnail.isUserInteractionEnabled = true
+
+        let tapArticleGesture = UITapGestureRecognizer(target: self, action: #selector(didTapArticle))
+        article.addGestureRecognizer(tapArticleGesture)
+        article.isUserInteractionEnabled = true
+
+        let tapIsLikeGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsLike))
+        likeIcon.addGestureRecognizer(tapIsLikeGesture)
+        likeIcon.isUserInteractionEnabled = true
+
+        let tapIsFavoriteGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsFavorite))
+        favoriteIcon.addGestureRecognizer(tapIsFavoriteGesture)
+        favoriteIcon.isUserInteractionEnabled = true
+    }
+}
+
+// MARK: - Set constraints
+extension HomePostCell {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             avatar.widthAnchor.constraint(equalToConstant: 60),
