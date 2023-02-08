@@ -50,7 +50,6 @@ final class ConfirmLoginViewController: UIViewController {
         field.placeholder = "* * * * * *"
         field.borderStyle = .roundedRect
         field.textAlignment = .center
-        //        field.delegate = self
         field.keyboardType = .numberPad
         return field
     }()
@@ -79,6 +78,7 @@ final class ConfirmLoginViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -86,9 +86,7 @@ final class ConfirmLoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        
         phoneNumberLabel.text = viewModel.phoneNumber
-
         setSubviews(subviews: titleLabel, infoLabel, phoneNumberLabel, instructionLabel, smsField, loginButton, bannerImage)
         setConstraints()
     }
@@ -100,6 +98,23 @@ final class ConfirmLoginViewController: UIViewController {
         }
     }
 
+    // MARK: - Actions
+    @objc private func didTapLoginButton() {
+        if let text = smsField.text, !text.isEmpty {
+            AuthService.shared.verifyCode(smsCode: text) { [weak self] result in
+                switch result {
+                case .success:
+                    self?.coordinator.coordinateToHomeFlow()
+                case .failure(let error):
+                    self?.showAlert(with: "Ошибка", and: "\(error.localizedDescription)")
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Set constraints
+extension ConfirmLoginViewController {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
@@ -130,18 +145,5 @@ final class ConfirmLoginViewController: UIViewController {
             bannerImage.heightAnchor.constraint(equalToConstant: 100),
             bannerImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
-    }
-
-    @objc private func didTapLoginButton() {
-        if let text = smsField.text, !text.isEmpty {
-            AuthService.shared.verifyCode(smsCode: text) { [weak self] result in
-                switch result {
-                case .success:
-                    self?.coordinator.coordinateToHomeFlow()
-                case .failure(let error):
-                    self?.showAlert(with: "Ошибка", and: "\(error.localizedDescription)")
-                }
-            }
-        }
     }
 }

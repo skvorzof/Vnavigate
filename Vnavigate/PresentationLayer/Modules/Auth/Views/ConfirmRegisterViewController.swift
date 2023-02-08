@@ -50,7 +50,6 @@ final class ConfirmRegisterViewController: UIViewController {
         field.placeholder = "* * * * * *"
         field.borderStyle = .roundedRect
         field.textAlignment = .center
-        //        field.delegate = self
         field.keyboardType = .numberPad
         return field
     }()
@@ -79,6 +78,7 @@ final class ConfirmRegisterViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -100,6 +100,23 @@ final class ConfirmRegisterViewController: UIViewController {
         }
     }
 
+    // MARK: - Actions
+    @objc private func didTapRegisterButton() {
+        if let text = smsField.text, !text.isEmpty {
+            AuthService.shared.verifyCode(smsCode: text) { [weak self] result in
+                switch result {
+                case .success:
+                    self?.coordinator.coordinateToHomeFlow()
+                case .failure(let error):
+                    self?.showAlert(with: "Ошибка", and: "\(error.localizedDescription)")
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Set constraints
+extension ConfirmRegisterViewController {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
@@ -130,18 +147,5 @@ final class ConfirmRegisterViewController: UIViewController {
             bannerImage.heightAnchor.constraint(equalToConstant: 100),
             bannerImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
-    }
-
-    @objc private func didTapRegisterButton() {
-        if let text = smsField.text, !text.isEmpty {
-            AuthService.shared.verifyCode(smsCode: text) { [weak self] result in
-                switch result {
-                case .success:
-                    self?.coordinator.coordinateToHomeFlow()
-                case .failure(let error):
-                    self?.showAlert(with: "Ошибка", and: "\(error.localizedDescription)")
-                }
-            }
-        }
     }
 }

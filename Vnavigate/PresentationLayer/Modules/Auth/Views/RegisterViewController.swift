@@ -74,6 +74,7 @@ final class RegisterViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -96,6 +97,33 @@ final class RegisterViewController: UIViewController {
         }
     }
 
+    // MARK: - Actions
+    @objc private func didTapNextButton() {
+        if let text = phoneField.text, !text.isEmpty {
+            AuthService.shared.startAuth(phoneNumber: text) { [weak self] result in
+                switch result {
+                case .success:
+                    self?.coordinator.coordinateToConfirmRegister(phoneNumber: text)
+                case .failure(let error):
+                    self?.showAlert(with: "Ошибка", and: "\(error.localizedDescription)")
+                }
+            }
+        }
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension RegisterViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return false }
+        let newString = (text as NSString).replacingCharacters(in: range, with: string)
+        textField.text = PhoneNumberFofmatter.shared.formatter(mask: "+# (###) ###-##-##", phoneNumber: newString)
+        return false
+    }
+}
+
+// MARK: - Set constraints
+extension RegisterViewController {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
@@ -122,28 +150,5 @@ final class RegisterViewController: UIViewController {
             conventionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             conventionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
         ])
-    }
-
-    @objc private func didTapNextButton() {
-        if let text = phoneField.text, !text.isEmpty {
-            AuthService.shared.startAuth(phoneNumber: text) { [weak self] result in
-                switch result {
-                case .success:
-                    self?.coordinator.coordinateToConfirmRegister(phoneNumber: text)
-                case .failure(let error):
-                    self?.showAlert(with: "Ошибка", and: "\(error.localizedDescription)")
-                }
-            }
-        }
-    }
-}
-
-// MARK: - UITextFieldDelegate
-extension RegisterViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let text = textField.text else { return false }
-        let newString = (text as NSString).replacingCharacters(in: range, with: string)
-        textField.text = PhoneNumberFofmatter.shared.formatter(mask: "+# (###) ###-##-##", phoneNumber: newString)
-        return false
     }
 }

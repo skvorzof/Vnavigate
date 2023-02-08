@@ -16,9 +16,9 @@ protocol ProfilePostCellDelegate: AnyObject {
 final class ProfilePostCell: UICollectionViewCell {
 
     weak var delegate: ProfilePostCellDelegate?
-    
+
     private var post: Post?
-    
+
     private let thumbnail = UIImageView()
 
     private let article: UILabel = {
@@ -39,16 +39,17 @@ final class ProfilePostCell: UICollectionViewCell {
         setConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     func configure(post: Post) {
         self.post = post
-        
+
         thumbnail.image = UIImage(named: post.thumbnail ?? "")
         article.text = post.article?.limitedText(to: 120)
-        
+
         let likeImage = post.isLike ? "heart.fill" : "heart"
         likeIcon.image = UIImage(systemName: likeImage)
 
@@ -62,25 +63,8 @@ final class ProfilePostCell: UICollectionViewCell {
             addSubview(subview)
         }
     }
-    
-    private func setGesture() {
-        let tapThumbnailGesture = UITapGestureRecognizer(target: self, action: #selector(didTapArticle))
-        thumbnail.addGestureRecognizer(tapThumbnailGesture)
-        thumbnail.isUserInteractionEnabled = true
-        
-        let tapArticleGesture = UITapGestureRecognizer(target: self, action: #selector(didTapArticle))
-        article.addGestureRecognizer(tapArticleGesture)
-        article.isUserInteractionEnabled = true
 
-        let tapIsLikeGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsLike))
-        likeIcon.addGestureRecognizer(tapIsLikeGesture)
-        likeIcon.isUserInteractionEnabled = true
-
-        let tapIsFavoriteGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsFavorite))
-        favoriteIcon.addGestureRecognizer(tapIsFavoriteGesture)
-        favoriteIcon.isUserInteractionEnabled = true
-    }
-    
+    // MARK: - Actions
     @objc
     private func didTapArticle() {
         guard let post = post else { return }
@@ -98,7 +82,31 @@ final class ProfilePostCell: UICollectionViewCell {
         guard let post = post else { return }
         delegate?.didTapIsFavorite(post: post)
     }
+}
 
+// MARK: - GestureRecognizer
+extension ProfilePostCell {
+    private func setGesture() {
+        let tapThumbnailGesture = UITapGestureRecognizer(target: self, action: #selector(didTapArticle))
+        thumbnail.addGestureRecognizer(tapThumbnailGesture)
+        thumbnail.isUserInteractionEnabled = true
+
+        let tapArticleGesture = UITapGestureRecognizer(target: self, action: #selector(didTapArticle))
+        article.addGestureRecognizer(tapArticleGesture)
+        article.isUserInteractionEnabled = true
+
+        let tapIsLikeGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsLike))
+        likeIcon.addGestureRecognizer(tapIsLikeGesture)
+        likeIcon.isUserInteractionEnabled = true
+
+        let tapIsFavoriteGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsFavorite))
+        favoriteIcon.addGestureRecognizer(tapIsFavoriteGesture)
+        favoriteIcon.isUserInteractionEnabled = true
+    }
+}
+
+// MARK: - setConstraints
+extension ProfilePostCell {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             thumbnail.heightAnchor.constraint(equalToConstant: 200),

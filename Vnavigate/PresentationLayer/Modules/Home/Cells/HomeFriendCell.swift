@@ -23,7 +23,7 @@ final class HomeFriendCell: UICollectionViewCell {
         backgroundColor = .systemBackground
 
         setSubviews()
-        setUI()
+        setGesture()
         setConstraints()
     }
 
@@ -37,27 +37,34 @@ final class HomeFriendCell: UICollectionViewCell {
         addSubview(avatar)
     }
 
-    private func setUI() {
-        let tapAvatarGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
-        avatar.addGestureRecognizer(tapAvatarGesture)
-        avatar.isUserInteractionEnabled = true
-    }
-
-    private func setConstraints() {
-        NSLayoutConstraint.activate([
-            avatar.widthAnchor.constraint(equalToConstant: 60),
-            avatar.heightAnchor.constraint(equalToConstant: 60),
-        ])
-    }
-
     func configure(author: Author) {
         self.author = author
         avatar.image = UIImage(named: author.avatar ?? "")
     }
 
+    // MARK: - Actions
     @objc
     private func didTapAvatar() {
         guard let author = author else { return }
         delegate?.didTapFriendAvatar(author: author)
+    }
+}
+
+// MARK: - GestureRecognizer
+extension HomeFriendCell {
+    private func setGesture() {
+        let tapAvatarGesture = UITapGestureRecognizer(target: self, action: #selector(didTapAvatar))
+        avatar.addGestureRecognizer(tapAvatarGesture)
+        avatar.isUserInteractionEnabled = true
+    }
+}
+
+// MARK: - Set constraints
+extension HomeFriendCell {
+    private func setConstraints() {
+        NSLayoutConstraint.activate([
+            avatar.widthAnchor.constraint(equalToConstant: 60),
+            avatar.heightAnchor.constraint(equalToConstant: 60),
+        ])
     }
 }

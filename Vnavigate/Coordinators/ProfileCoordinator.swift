@@ -46,7 +46,9 @@ final class ProfileCoordinator {
         navigationController.pushViewController(profilePostDetailViewController, animated: true)
     }
 
-    func coordinateToRoot() {
-        navigationController.popViewController(animated: true)
+    func coordinateToSignOut() {
+        guard let window = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first else { return }
+        let appCoordinator = AppCoordinator(window: window)
+        appCoordinator.start()
     }
 }

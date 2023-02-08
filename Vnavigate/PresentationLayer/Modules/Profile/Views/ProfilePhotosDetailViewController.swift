@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfilePhotosDetailViewController: UIViewController {
+final class ProfilePhotosDetailViewController: UIViewController {
 
     private let viewModel: ProfilePhotosDetailViewModel
 
@@ -33,6 +33,7 @@ class ProfilePhotosDetailViewController: UIViewController {
 
         setUI()
         setGesture()
+        setConstraints()
     }
 
     private func setUI() {
@@ -40,24 +41,33 @@ class ProfilePhotosDetailViewController: UIViewController {
         view.addSubview(photoView)
 
         photoView.image = UIImage(named: viewModel.photo.image ?? "")
-
-        NSLayoutConstraint.activate([
-            photoView.topAnchor.constraint(equalTo: view.topAnchor),
-            photoView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            photoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            photoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        ])
     }
 
+    // MARK: - Actions
+    @objc
+    private func dismissView() {
+        dismiss(animated: true)
+    }
+}
+
+// MARK: - GestureRecognizer
+extension ProfilePhotosDetailViewController {
     private func setGesture() {
         let gesture = UISwipeGestureRecognizer(target: self, action: #selector(dismissView))
         gesture.direction = .down
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(gesture)
     }
+}
 
-    @objc
-    private func dismissView() {
-        dismiss(animated: true)
+// MARK: - Set constraints
+extension ProfilePhotosDetailViewController {
+    private func setConstraints() {
+        NSLayoutConstraint.activate([
+            photoView.topAnchor.constraint(equalTo: view.topAnchor),
+            photoView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            photoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            photoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
     }
 }

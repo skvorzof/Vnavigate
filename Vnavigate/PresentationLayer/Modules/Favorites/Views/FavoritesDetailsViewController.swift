@@ -72,16 +72,7 @@ final class FavoritesDetailsViewController: UIViewController {
         favoriteIcon.image = UIImage(systemName: favoriteImage)
     }
 
-    private func setGesture() {
-        let tapIsLikeGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsLike))
-        likeIcon.addGestureRecognizer(tapIsLikeGesture)
-        likeIcon.isUserInteractionEnabled = true
-
-        let tapIsFavoriteGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsFavorite))
-        favoriteIcon.addGestureRecognizer(tapIsFavoriteGesture)
-        favoriteIcon.isUserInteractionEnabled = true
-    }
-
+    // MARK: - Actions
     @objc
     private func didTapIsLike() {
         let like = post.isLike ? false : true
@@ -101,6 +92,22 @@ final class FavoritesDetailsViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
 
+}
+// MARK: - GestureRecognizer
+extension FavoritesDetailsViewController {
+    private func setGesture() {
+        let tapIsLikeGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsLike))
+        likeIcon.addGestureRecognizer(tapIsLikeGesture)
+        likeIcon.isUserInteractionEnabled = true
+
+        let tapIsFavoriteGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIsFavorite))
+        favoriteIcon.addGestureRecognizer(tapIsFavoriteGesture)
+        favoriteIcon.isUserInteractionEnabled = true
+    }
+}
+
+// MARK: - Set constraints
+extension FavoritesDetailsViewController {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             avatar.widthAnchor.constraint(equalToConstant: 60),
