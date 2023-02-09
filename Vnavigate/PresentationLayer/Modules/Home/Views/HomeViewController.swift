@@ -22,10 +22,11 @@ final class HomeViewController: UIViewController {
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(
-            frame: view.bounds,
+            frame: .zero,
             collectionViewLayout: HomeCompositionalLayout { [weak self] in
                 self?.viewModel.dataSourceSnapshot.sectionIdentifiers[$0].layoutType ?? .friendsLayout
             })
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
 
@@ -43,7 +44,9 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .systemBackground
         configureColletionView()
+        setConstraints()
         configureViewModel()
         viewModel.changeState(.initial)
     }
@@ -74,8 +77,6 @@ final class HomeViewController: UIViewController {
 
     // MARK: - configureColletionView
     private func configureColletionView() {
-        collectionView.backgroundColor = .systemBackground
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.addSubview(collectionView)
 
         let homeFriendCellRegistration = UICollectionView.CellRegistration<HomeFriendCell, Author> { cell, indexPath, author in
@@ -119,16 +120,28 @@ extension HomeViewController: HomePostCellDelegate {
     }
 
     func didTapIsLike(post: Post) {
-        let isLike = post.isLike ? false : true
+        let isLike = !post.isLike
         post.setValue(isLike, forKey: "isLike")
         CoreDataManager.shared.save()
         collectionView.reloadData()
     }
 
     func didTapIsFavorite(post: Post) {
-        let isFavorite = post.isFavorite ? false : true
+        let isFavorite = !post.isFavorite
         post.setValue(isFavorite, forKey: "isFavorite")
         CoreDataManager.shared.save()
         collectionView.reloadData()
+    }
+}
+
+// MARK: - setConstraints
+extension HomeViewController {
+    private func setConstraints() {
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
     }
 }

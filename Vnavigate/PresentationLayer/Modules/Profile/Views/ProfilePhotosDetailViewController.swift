@@ -11,7 +11,7 @@ final class ProfilePhotosDetailViewController: UIViewController {
 
     private let viewModel: ProfilePhotosDetailViewModel
 
-    private let photoView: UIImageView = {
+    private lazy var photoView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false

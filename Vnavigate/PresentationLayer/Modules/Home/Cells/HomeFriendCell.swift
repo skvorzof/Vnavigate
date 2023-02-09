@@ -16,7 +16,7 @@ final class HomeFriendCell: UICollectionViewCell {
     weak var delegate: HomeFriendCellDelegate?
 
     private var author: Author?
-    private let avatar = CircularImageView()
+    private lazy var avatar = CircularImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)

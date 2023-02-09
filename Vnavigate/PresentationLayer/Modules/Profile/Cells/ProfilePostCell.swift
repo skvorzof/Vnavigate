@@ -19,16 +19,16 @@ final class ProfilePostCell: UICollectionViewCell {
 
     private var post: Post?
 
-    private let thumbnail = UIImageView()
+    private lazy var thumbnail = UIImageView()
 
-    private let article: UILabel = {
+    private lazy var article: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         return label
     }()
 
-    private let likeIcon = UIImageView()
-    private let favoriteIcon = UIImageView()
+    private lazy var likeIcon = UIImageView()
+    private lazy var favoriteIcon = UIImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)

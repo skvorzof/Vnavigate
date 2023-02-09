@@ -11,7 +11,7 @@ final class AuthViewController: UIViewController {
 
     private let coordinator: AuthCoordinator
 
-    private let bannerImage: UIImageView = {
+    private lazy var bannerImage: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "auth_bg")
         view.translatesAutoresizingMaskIntoConstraints = false

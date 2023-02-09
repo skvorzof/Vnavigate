@@ -11,16 +11,16 @@ final class ProfilePostDetailViewController: UIViewController {
 
     private let viewModel: ProfilePostDetailViewModel
 
-    private let thumbnail = UIImageView()
+    private lazy var thumbnail = UIImageView()
 
-    private let article: UILabel = {
+    private lazy var article: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         return label
     }()
 
-    private let likeIcon = UIImageView()
-    private let favoriteIcon = UIImageView()
+    private lazy var likeIcon = UIImageView()
+    private lazy var favoriteIcon = UIImageView()
 
     init(viewModel: ProfilePostDetailViewModel) {
         self.viewModel = viewModel
@@ -63,7 +63,7 @@ final class ProfilePostDetailViewController: UIViewController {
     // MARK: - Actions
     @objc
     private func didTapIsLike() {
-        let like = viewModel.post.isLike ? false : true
+        let like = !viewModel.post.isLike
         viewModel.post.setValue(like, forKey: "isLike")
         CoreDataManager.shared.save()
 
@@ -73,7 +73,7 @@ final class ProfilePostDetailViewController: UIViewController {
 
     @objc
     private func didTapIsFavorite() {
-        let favorite = viewModel.post.isFavorite ? false : true
+        let favorite = !viewModel.post.isFavorite
         viewModel.post.setValue(favorite, forKey: "isFavorite")
         CoreDataManager.shared.save()
 

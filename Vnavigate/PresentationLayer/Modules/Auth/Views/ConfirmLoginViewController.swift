@@ -12,7 +12,7 @@ final class ConfirmLoginViewController: UIViewController {
     private let coordinator: AuthCoordinator
     private let viewModel: ConfirmLoginViewModel
 
-    private let titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Подтверждение входа"
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
@@ -20,21 +20,21 @@ final class ConfirmLoginViewController: UIViewController {
         return label
     }()
 
-    private let infoLabel: UILabel = {
+    private lazy var infoLabel: UILabel = {
         let label = UILabel()
         label.text = "Мы отправили SMS с кодом на номер"
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return label
     }()
 
-    private let phoneNumberLabel: UILabel = {
+    private lazy var phoneNumberLabel: UILabel = {
         let label = UILabel()
         label.text = "+7"
         label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         return label
     }()
 
-    private let instructionLabel: UILabel = {
+    private lazy var instructionLabel: UILabel = {
         let label = UILabel()
         label.text = "Введите код из SMS"
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
@@ -51,6 +51,7 @@ final class ConfirmLoginViewController: UIViewController {
         field.borderStyle = .roundedRect
         field.textAlignment = .center
         field.keyboardType = .numberPad
+        field.textContentType = .oneTimeCode
         return field
     }()
 
@@ -65,7 +66,7 @@ final class ConfirmLoginViewController: UIViewController {
         return button
     }()
 
-    private let bannerImage: UIImageView = {
+    private lazy var bannerImage: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(named: "auth_check")
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -88,7 +89,19 @@ final class ConfirmLoginViewController: UIViewController {
         view.backgroundColor = .systemBackground
         phoneNumberLabel.text = viewModel.phoneNumber
         setSubviews(subviews: titleLabel, infoLabel, phoneNumberLabel, instructionLabel, smsField, loginButton, bannerImage)
+        setUI()
         setConstraints()
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+
+    private func setUI() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     private func setSubviews(subviews: UIView...) {
@@ -110,6 +123,22 @@ final class ConfirmLoginViewController: UIViewController {
                 }
             }
         }
+    }
+
+    @objc
+    private func keyboardWillShow(notification: NSNotification) {
+        if view.frame.height < 700 {
+            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                let keyboardHeight = keyboardFrame.cgRectValue.height
+                let bottomSpace = view.frame.height - (loginButton.frame.origin.y + loginButton.frame.height)
+                view.frame.origin.y -= keyboardHeight - bottomSpace + 20
+            }
+        }
+    }
+
+    @objc
+    private func keyboardWillHide(notification: NSNotification) {
+        view.frame.origin.y = 0
     }
 }
 

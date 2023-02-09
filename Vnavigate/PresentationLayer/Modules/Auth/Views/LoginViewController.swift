@@ -11,7 +11,7 @@ final class LoginViewController: UIViewController {
 
     private let coordinator: AuthCoordinator
 
-    private let titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "С возвращением".uppercased()
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
@@ -19,7 +19,7 @@ final class LoginViewController: UIViewController {
         return label
     }()
 
-    private let descriptionLabel: UILabel = {
+    private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "Введите номер телефона для входа в приложение"
         label.numberOfLines = 0
@@ -36,8 +36,8 @@ final class LoginViewController: UIViewController {
         field.placeholder = "+7 (...) ...-..-.."
         field.borderStyle = .roundedRect
         field.textAlignment = .center
-        field.delegate = self
         field.keyboardType = .numberPad
+        field.delegate = self
         return field
     }()
 
@@ -67,7 +67,19 @@ final class LoginViewController: UIViewController {
         view.backgroundColor = .systemBackground
 
         setSubviews(subviews: titleLabel, descriptionLabel, phoneField, sendButton)
+        setUI()
         setConstraints()
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+
+    private func setUI() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     private func setSubviews(subviews: UIView...) {
@@ -89,6 +101,22 @@ final class LoginViewController: UIViewController {
                 }
             }
         }
+    }
+
+    @objc
+    private func keyboardWillShow(notification: NSNotification) {
+        if view.frame.height < 700 {
+            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                let keyboardHeight = keyboardFrame.cgRectValue.height
+                let bottomSpace = view.frame.height - (sendButton.frame.origin.y + sendButton.frame.height)
+                view.frame.origin.y -= keyboardHeight - bottomSpace + 20
+            }
+        }
+    }
+
+    @objc
+    private func keyboardWillHide(notification: NSNotification) {
+        view.frame.origin.y = 0
     }
 }
 

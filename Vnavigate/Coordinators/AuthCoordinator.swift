@@ -48,9 +48,12 @@ final class AuthCoordinator {
     func coordinateToHomeFlow() {
         let window = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first
         let rootViewController = UITabBarController()
+
         window?.rootViewController = rootViewController
 
         let tabCoordinator = TabCoordinator(tabBarController: rootViewController)
         tabCoordinator.start()
+
+        UIView.transition(with: window!, duration: 0.5, options: .transitionFlipFromRight, animations: nil)
     }
 }

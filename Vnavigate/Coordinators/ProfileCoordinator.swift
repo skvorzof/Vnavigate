@@ -19,6 +19,7 @@ final class ProfileCoordinator {
         let profileViewModel = ProfileViewModel()
         let profileViewController = ProfileViewController(coordinator: self, viewModel: profileViewModel)
         profileViewController.title = "Профиль"
+        profileViewController.navigationItem.backButtonDisplayMode = .minimal
         navigationController.viewControllers = [profileViewController]
         navigationController.tabBarItem = UITabBarItem(
             title: nil,
@@ -50,5 +51,7 @@ final class ProfileCoordinator {
         guard let window = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first else { return }
         let appCoordinator = AppCoordinator(window: window)
         appCoordinator.start()
+
+        UIView.transition(with: window, duration: 0.5, options: .transitionFlipFromRight, animations: nil)
     }
 }

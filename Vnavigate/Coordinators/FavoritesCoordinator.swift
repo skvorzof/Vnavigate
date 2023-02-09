@@ -19,6 +19,7 @@ final class FavoritesCoordinator {
         let favoritesViewModel = FavoritesViewModel()
         let favoritesViewController = FavoritesViewController(coordinator: self, viewModel: favoritesViewModel)
         favoritesViewController.title = "Избранное"
+        favoritesViewController.navigationItem.backButtonDisplayMode = .minimal
         navigationController.viewControllers = [favoritesViewController]
         navigationController.tabBarItem = UITabBarItem(
             title: nil,

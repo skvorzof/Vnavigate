@@ -16,15 +16,15 @@ final class ProfileInfoCell: UICollectionViewCell {
 
     weak var delegate: ProfileInfoCellDelegate?
     private var author: Author?
-    private let avatar = CircularImageView()
+    private lazy var avatar = CircularImageView()
 
-    private let name: UILabel = {
+    private lazy var name: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         return label
     }()
 
-    private let profession: UILabel = {
+    private lazy var profession: UILabel = {
         let label = UILabel()
         label.textColor = CustomColor.gray
         return label
@@ -40,7 +40,7 @@ final class ProfileInfoCell: UICollectionViewCell {
         return button
     }()
 
-    private let publicationsLabel: UILabel = {
+    private lazy var publicationsLabel: UILabel = {
         let label = UILabel()
         label.text = "1400\n публикаций"
         label.numberOfLines = 0
@@ -48,7 +48,7 @@ final class ProfileInfoCell: UICollectionViewCell {
         return label
     }()
 
-    private let followLabel: UILabel = {
+    private lazy var followLabel: UILabel = {
         let label = UILabel()
         label.text = "447\n подписок"
         label.numberOfLines = 0
@@ -56,7 +56,7 @@ final class ProfileInfoCell: UICollectionViewCell {
         return label
     }()
 
-    private let followersLabel: UILabel = {
+    private lazy var followersLabel: UILabel = {
         let label = UILabel()
         label.text = "161 тыс.\n подписчиков"
         label.numberOfLines = 0
@@ -110,14 +110,14 @@ final class ProfileInfoCell: UICollectionViewCell {
         return stackView
     }()
 
-    private let headerPhotosLabel: UILabel = {
+    private lazy var headerPhotosLabel: UILabel = {
         let label = UILabel()
         label.text = "Фотографии"
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         return label
     }()
 
-    private let countPhotos: UILabel = {
+    private lazy var countPhotos: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         label.textColor = CustomColor.gray

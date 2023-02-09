@@ -11,21 +11,21 @@ final class RegisterViewController: UIViewController {
 
     private let coordinator: AuthCoordinator
 
-    private let titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Зарегистрироваться".uppercased()
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         return label
     }()
 
-    private let numberLabel: UILabel = {
+    private lazy var numberLabel: UILabel = {
         let label = UILabel()
         label.text = "Введите номер"
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         return label
     }()
 
-    private let descriptionLabel: UILabel = {
+    private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "Ваш номер будет использоваться для входа в аккаунт"
         label.numberOfLines = 0
@@ -59,7 +59,7 @@ final class RegisterViewController: UIViewController {
         return button
     }()
 
-    private let conventionLabel: UILabel = {
+    private lazy var conventionLabel: UILabel = {
         let label = UILabel()
         label.text = "Нажимая кнопку “Далее” Вы принимаете пользовательское Соглашение и политику конфедициальности"
         label.numberOfLines = 0
@@ -87,7 +87,12 @@ final class RegisterViewController: UIViewController {
         phoneField.keyboardType = .numberPad
 
         setSubviews(subviews: titleLabel, numberLabel, descriptionLabel, phoneField, nextButton, conventionLabel)
+        setUI()
         setConstraints()
+    }
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
 
     private func setSubviews(subviews: UIView...) {
@@ -97,8 +102,16 @@ final class RegisterViewController: UIViewController {
         }
     }
 
+    private func setUI() {
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
     // MARK: - Actions
-    @objc private func didTapNextButton() {
+    @objc
+    private func didTapNextButton() {
         if let text = phoneField.text, !text.isEmpty {
             AuthService.shared.startAuth(phoneNumber: text) { [weak self] result in
                 switch result {
@@ -109,6 +122,20 @@ final class RegisterViewController: UIViewController {
                 }
             }
         }
+    }
+
+    @objc
+    private func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            let bottomSpace = view.frame.height - (conventionLabel.frame.origin.y + conventionLabel.frame.height)
+            view.frame.origin.y -= keyboardHeight - bottomSpace + 20
+        }
+    }
+
+    @objc
+    private func keyboardWillHide(notification: NSNotification) {
+        view.frame.origin.y = 0
     }
 }
 

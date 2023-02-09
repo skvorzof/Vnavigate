@@ -19,6 +19,7 @@ final class HomeCoordinator {
         let homeViewModel = HomeViewModel()
         let homeViewController = HomeViewController(coordinator: self, viewModel: homeViewModel)
         homeViewController.title = "Главная"
+        homeViewController.navigationItem.backButtonDisplayMode = .minimal
         navigationController.viewControllers = [homeViewController]
         navigationController.tabBarItem = UITabBarItem(
             title: nil,
@@ -36,6 +37,7 @@ final class HomeCoordinator {
         profileViewModel.defaultAuthor = author
         let profileViewController = ProfileViewController(
             coordinator: ProfileCoordinator(navigationController: navigationController), viewModel: profileViewModel)
+        profileViewController.navigationItem.backButtonDisplayMode = .minimal
         navigationController.pushViewController(profileViewController, animated: true)
     }
 }

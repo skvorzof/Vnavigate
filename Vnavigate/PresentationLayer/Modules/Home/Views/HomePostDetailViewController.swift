@@ -10,25 +10,25 @@ import UIKit
 final class HomePostDetailViewController: UIViewController {
 
     private let post: Post
-    private let avatar = CircularImageView()
-    private let name = UILabel()
+    private lazy var avatar = CircularImageView()
+    private lazy var name = UILabel()
 
-    private let profession: UILabel = {
+    private lazy var profession: UILabel = {
         let label = UILabel()
         label.textColor = CustomColor.gray
         return label
     }()
 
-    private let thumbnail = UIImageView()
+    private lazy var thumbnail = UIImageView()
 
-    private let article: UILabel = {
+    private lazy var article: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         return label
     }()
 
-    private let likeIcon = UIImageView()
-    private let favoriteIcon = UIImageView()
+    private lazy var likeIcon = UIImageView()
+    private lazy var favoriteIcon = UIImageView()
 
     init(post: Post) {
         self.post = post
