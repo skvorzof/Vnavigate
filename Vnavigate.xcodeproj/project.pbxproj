@@ -12,7 +12,6 @@
 		467F5B3A298D1A47007D4E4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 467F5B39298D1A47007D4E4A /* Assets.xcassets */; };
 		467F5B3D298D1A47007D4E4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 467F5B3B298D1A47007D4E4A /* LaunchScreen.storyboard */; };
 		467F5B48298D1B07007D4E4A /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B47298D1B07007D4E4A /* State.swift */; };
-		467F5B4A298D1B2E007D4E4A /* PhoneNumberFofmatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B49298D1B2E007D4E4A /* PhoneNumberFofmatter.swift */; };
 		467F5B4C298D1B5B007D4E4A /* CircularImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B4B298D1B5B007D4E4A /* CircularImageView.swift */; };
 		467F5B51298D1BE1007D4E4A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B50298D1BE1007D4E4A /* CoreDataManager.swift */; };
 		467F5B54298D1BFF007D4E4A /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 467F5B52298D1BFF007D4E4A /* CoreDataModel.xcdatamodeld */; };
@@ -72,6 +71,7 @@
 		46CB4BA729916EDB00A7AD9C /* ProfilePhotoDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CB4BA629916EDB00A7AD9C /* ProfilePhotoDetailViewModel.swift */; };
 		46CB4BA929916FE800A7AD9C /* ProfilePhotosDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CB4BA829916FE800A7AD9C /* ProfilePhotosDetailViewModel.swift */; };
 		46CB4BAB2991753100A7AD9C /* ProfilePhotoDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CB4BAA2991753100A7AD9C /* ProfilePhotoDetailCell.swift */; };
+		46EE4C612996519800B7CF6B /* UITextFieldDelegate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EE4C602996519800B7CF6B /* UITextFieldDelegate+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,7 +82,6 @@
 		467F5B3C298D1A47007D4E4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		467F5B3E298D1A47007D4E4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		467F5B47298D1B07007D4E4A /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
-		467F5B49298D1B2E007D4E4A /* PhoneNumberFofmatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberFofmatter.swift; sourceTree = "<group>"; };
 		467F5B4B298D1B5B007D4E4A /* CircularImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularImageView.swift; sourceTree = "<group>"; };
 		467F5B50298D1BE1007D4E4A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		467F5B53298D1BFF007D4E4A /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -141,6 +140,7 @@
 		46CB4BA629916EDB00A7AD9C /* ProfilePhotoDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhotoDetailViewModel.swift; sourceTree = "<group>"; };
 		46CB4BA829916FE800A7AD9C /* ProfilePhotosDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhotosDetailViewModel.swift; sourceTree = "<group>"; };
 		46CB4BAA2991753100A7AD9C /* ProfilePhotoDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhotoDetailCell.swift; sourceTree = "<group>"; };
+		46EE4C602996519800B7CF6B /* UITextFieldDelegate+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextFieldDelegate+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,7 +213,6 @@
 			children = (
 				467F5B4B298D1B5B007D4E4A /* CircularImageView.swift */,
 				46A1A52C29929D70005A48B8 /* CustomError.swift */,
-				467F5B49298D1B2E007D4E4A /* PhoneNumberFofmatter.swift */,
 				467F5B47298D1B07007D4E4A /* State.swift */,
 				467F5B79298D3543007D4E4A /* Typealiases.swift */,
 			);
@@ -257,8 +256,9 @@
 			isa = PBXGroup;
 			children = (
 				467F5B64298D2139007D4E4A /* String+Extension.swift */,
-				467F5B66298D2154007D4E4A /* UIView+Extension.swift */,
 				467F5B68298D2169007D4E4A /* UIAlertController+Extension.swift */,
+				46EE4C602996519800B7CF6B /* UITextFieldDelegate+Extension.swift */,
+				467F5B66298D2154007D4E4A /* UIView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -594,12 +594,12 @@
 				46CB4B9129910C7B00A7AD9C /* ProfileSection.swift in Sources */,
 				46CB4BA729916EDB00A7AD9C /* ProfilePhotoDetailViewModel.swift in Sources */,
 				467F5B67298D2154007D4E4A /* UIView+Extension.swift in Sources */,
-				467F5B4A298D1B2E007D4E4A /* PhoneNumberFofmatter.swift in Sources */,
 				467F5B60298D206D007D4E4A /* ProfileCoordinator.swift in Sources */,
 				467F5B31298D1A45007D4E4A /* AppDelegate.swift in Sources */,
 				46A1A51329929831005A48B8 /* AuthCoordinator.swift in Sources */,
 				46A1A51E299298F1005A48B8 /* LoginViewController.swift in Sources */,
 				46A1A52D29929D70005A48B8 /* CustomError.swift in Sources */,
+				46EE4C612996519800B7CF6B /* UITextFieldDelegate+Extension.swift in Sources */,
 				46CB4B9F299157A300A7AD9C /* ProfilePhotosViewContoller.swift in Sources */,
 				46A1A52229929945005A48B8 /* RegisterViewController.swift in Sources */,
 				46CB4B9B29914EF700A7AD9C /* ProfilePostDetailViewController.swift in Sources */,
