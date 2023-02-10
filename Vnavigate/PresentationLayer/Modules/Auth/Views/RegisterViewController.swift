@@ -61,11 +61,28 @@ final class RegisterViewController: UIViewController {
 
     private lazy var conventionLabel: UILabel = {
         let label = UILabel()
-        label.text = "Нажимая кнопку “Далее” Вы принимаете пользовательское Соглашение и политику конфедициальности"
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.textColor = CustomColor.gray
+
+        let textAttributes =
+            [
+                .font: UIFont.systemFont(ofSize: 12, weight: .medium),
+                .foregroundColor: CustomColor.gray as Any,
+            ] as [NSAttributedString.Key: Any]
+
+        let linkAttributes =
+            [
+                .font: UIFont.systemFont(ofSize: 12, weight: .regular),
+                .link: URL(string: "") as Any,
+            ] as [NSAttributedString.Key: Any]
+
+        let stringComponents = NSMutableAttributedString(
+            string: "Нажимая кнопку \"Далее\" Вы принимаете пользовательское ", attributes: textAttributes)
+        stringComponents.append(.init(string: "Соглашение ", attributes: linkAttributes))
+        stringComponents.append(.init(string: "и ", attributes: textAttributes))
+        stringComponents.append(.init(string: "политику конфедициальности", attributes: linkAttributes))
+
+        label.attributedText = stringComponents
         return label
     }()
 

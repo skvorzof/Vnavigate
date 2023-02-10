@@ -48,7 +48,6 @@ final class HomeViewController: UIViewController {
         configureColletionView()
         setConstraints()
         configureViewModel()
-        viewModel.changeState(.initial)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -87,6 +86,7 @@ final class HomeViewController: UIViewController {
         let homePostCellRegistration = UICollectionView.CellRegistration<HomePostCell, Post> { cell, indexPath, post in
             cell.configure(post: post)
             cell.delegate = self
+            cell.indexPath = indexPath
         }
 
         dataSource = HomeDiffableDataSource(collectionView: collectionView) { collectionView, indexPath, section in
@@ -119,18 +119,26 @@ extension HomeViewController: HomePostCellDelegate {
         coordinator.coordinateToHomePostDetail(post: post)
     }
 
-    func didTapIsLike(post: Post) {
+    func didTapIsLike(post: Post, indexPath: IndexPath) {
         let isLike = !post.isLike
         post.setValue(isLike, forKey: "isLike")
         CoreDataManager.shared.save()
-        collectionView.reloadData()
+        
+        guard let selectedLike = dataSource?.itemIdentifier(for: indexPath) else { return }
+        guard var snapshot = dataSource?.snapshot() else { return }
+        snapshot.reconfigureItems([selectedLike])
+        dataSource?.apply(snapshot)
     }
 
-    func didTapIsFavorite(post: Post) {
+    func didTapIsFavorite(post: Post, indexPath: IndexPath) {
         let isFavorite = !post.isFavorite
         post.setValue(isFavorite, forKey: "isFavorite")
         CoreDataManager.shared.save()
-        collectionView.reloadData()
+
+        guard let selectedFavorite = dataSource?.itemIdentifier(for: indexPath) else { return }
+        guard var snapshot = dataSource?.snapshot() else { return }
+        snapshot.reconfigureItems([selectedFavorite])
+        dataSource?.apply(snapshot)
     }
 }
 

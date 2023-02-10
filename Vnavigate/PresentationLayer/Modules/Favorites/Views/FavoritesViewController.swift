@@ -82,6 +82,7 @@ final class FavoritesViewController: UIViewController {
         let favoritesCellRegistration = UICollectionView.CellRegistration<FavoritesCell, Post> { cell, indexPath, post in
             cell.configure(post: post)
             cell.delegate = self
+            cell.indexPath = indexPath
         }
 
         dataSource = FavoritesDiffableDataSource(collectionView: collectionView) { collectionView, indexPath, section in
@@ -99,11 +100,15 @@ extension FavoritesViewController: FavoritesCellDelegate {
         coordinator.coordinateToFavoritesDetails(post: post)
     }
 
-    func didTapIsLike(post: Post) {
+    func didTapIsLike(post: Post, indexPath: IndexPath) {
         let isLike = !post.isLike
         post.setValue(isLike, forKey: "isLike")
         CoreDataManager.shared.save()
-        collectionView.reloadData()
+
+        guard let selectedLike = dataSource?.itemIdentifier(for: indexPath) else { return }
+        guard var snapshot = dataSource?.snapshot() else { return }
+        snapshot.reconfigureItems([selectedLike])
+        dataSource?.apply(snapshot)
     }
 
     func didTapIsFavorite(post: Post) {

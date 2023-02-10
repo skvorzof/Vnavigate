@@ -47,11 +47,11 @@ final class ProfileViewController: UIViewController {
         configureColletionView()
         setConstraints()
         configureVewModel()
-        viewModel.changeState(.initial)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.changeState(.initial)
         collectionView.reloadData()
     }
 
@@ -94,6 +94,7 @@ final class ProfileViewController: UIViewController {
         let profilePostCellRegistration = UICollectionView.CellRegistration<ProfilePostCell, Post> { cell, indexPath, post in
             cell.configure(post: post)
             cell.delegate = self
+            cell.indexPath = indexPath
         }
 
         dataSource = ProfileDiffableDataSource(collectionView: collectionView) { collectionView, indexPath, section in
@@ -140,18 +141,26 @@ extension ProfileViewController: ProfilePostCellDelegate {
         coordinator.coordinateToPostDetails(post: post)
     }
 
-    func didTapIsLike(post: Post) {
+    func didTapIsLike(post: Post, indexPath: IndexPath) {
         let isLike = post.isLike ? false : true
         post.setValue(isLike, forKey: "isLike")
         CoreDataManager.shared.save()
-        collectionView.reloadData()
+        
+        guard let selectedLike = dataSource?.itemIdentifier(for: indexPath) else { return }
+        guard var snapshot = dataSource?.snapshot() else { return }
+        snapshot.reconfigureItems([selectedLike])
+        dataSource?.apply(snapshot)
     }
 
-    func didTapIsFavorite(post: Post) {
+    func didTapIsFavorite(post: Post, indexPath: IndexPath) {
         let isFavorite = post.isFavorite ? false : true
         post.setValue(isFavorite, forKey: "isFavorite")
         CoreDataManager.shared.save()
-        collectionView.reloadData()
+        
+        guard let selectedFavorite = dataSource?.itemIdentifier(for: indexPath) else { return }
+        guard var snapshot = dataSource?.snapshot() else { return }
+        snapshot.reconfigureItems([selectedFavorite])
+        dataSource?.apply(snapshot)
     }
 }
 

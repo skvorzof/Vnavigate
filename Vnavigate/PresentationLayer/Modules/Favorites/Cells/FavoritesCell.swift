@@ -9,7 +9,7 @@ import UIKit
 
 protocol FavoritesCellDelegate: AnyObject {
     func didTapArticle(post: Post)
-    func didTapIsLike(post: Post)
+    func didTapIsLike(post: Post, indexPath: IndexPath)
     func didTapIsFavorite(post: Post)
 }
 
@@ -18,6 +18,8 @@ final class FavoritesCell: UICollectionViewCell {
     weak var delegate: FavoritesCellDelegate?
 
     private var post: Post?
+
+    var indexPath: IndexPath?
 
     private lazy var avatar = CircularImageView()
     private lazy var name = UILabel()
@@ -94,8 +96,8 @@ final class FavoritesCell: UICollectionViewCell {
 
     @objc
     private func didTapIsLike() {
-        guard let post = post else { return }
-        delegate?.didTapIsLike(post: post)
+        guard let post = post, let indexPath = indexPath else { return }
+        delegate?.didTapIsLike(post: post, indexPath: indexPath)
     }
 
     @objc

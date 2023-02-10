@@ -10,8 +10,8 @@ import UIKit
 protocol HomePostCellDelegate: AnyObject {
     func didTapAvatar(author: Author)
     func didTapArticle(post: Post)
-    func didTapIsLike(post: Post)
-    func didTapIsFavorite(post: Post)
+    func didTapIsLike(post: Post, indexPath: IndexPath)
+    func didTapIsFavorite(post: Post, indexPath: IndexPath)
 }
 
 final class HomePostCell: UICollectionViewCell {
@@ -19,6 +19,8 @@ final class HomePostCell: UICollectionViewCell {
     weak var delegate: HomePostCellDelegate?
 
     private var post: Post?
+
+    var indexPath: IndexPath?
 
     private lazy var avatar = CircularImageView()
     private lazy var name = UILabel()
@@ -101,14 +103,14 @@ final class HomePostCell: UICollectionViewCell {
 
     @objc
     private func didTapIsLike() {
-        guard let post = post else { return }
-        delegate?.didTapIsLike(post: post)
+        guard let post = post, let indexPath = indexPath else { return }
+        delegate?.didTapIsLike(post: post, indexPath: indexPath)
     }
 
     @objc
     private func didTapIsFavorite() {
-        guard let post = post else { return }
-        delegate?.didTapIsFavorite(post: post)
+        guard let post = post, let indexPath = indexPath else { return }
+        delegate?.didTapIsFavorite(post: post, indexPath: indexPath)
     }
 
 }

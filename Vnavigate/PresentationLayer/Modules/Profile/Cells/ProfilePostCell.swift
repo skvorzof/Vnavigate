@@ -9,8 +9,8 @@ import UIKit
 
 protocol ProfilePostCellDelegate: AnyObject {
     func didTapArticle(post: Post)
-    func didTapIsLike(post: Post)
-    func didTapIsFavorite(post: Post)
+    func didTapIsLike(post: Post, indexPath: IndexPath)
+    func didTapIsFavorite(post: Post, indexPath: IndexPath)
 }
 
 final class ProfilePostCell: UICollectionViewCell {
@@ -18,6 +18,8 @@ final class ProfilePostCell: UICollectionViewCell {
     weak var delegate: ProfilePostCellDelegate?
 
     private var post: Post?
+
+    var indexPath: IndexPath?
 
     private lazy var thumbnail = UIImageView()
 
@@ -73,14 +75,14 @@ final class ProfilePostCell: UICollectionViewCell {
 
     @objc
     private func didTapIsLike() {
-        guard let post = post else { return }
-        delegate?.didTapIsLike(post: post)
+        guard let post = post, let indexPath = indexPath else { return }
+        delegate?.didTapIsLike(post: post, indexPath: indexPath)
     }
 
     @objc
     private func didTapIsFavorite() {
-        guard let post = post else { return }
-        delegate?.didTapIsFavorite(post: post)
+        guard let post = post, let indexPath = indexPath else { return }
+        delegate?.didTapIsFavorite(post: post, indexPath: indexPath)
     }
 }
 
