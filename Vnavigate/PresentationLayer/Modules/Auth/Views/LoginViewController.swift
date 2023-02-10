@@ -122,11 +122,17 @@ final class LoginViewController: UIViewController {
 
 // MARK: - UITextFieldDelegate
 extension LoginViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if (textField == phoneField) && textField.text == "" {
+            textField.text = "+7("
+        }
+    }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let text = textField.text else { return false }
-        let newString = (text as NSString).replacingCharacters(in: range, with: string)
-        textField.text = PhoneNumberFofmatter.shared.formatter(mask: "+# (###) ###-##-##", phoneNumber: newString)
-        return false
+        if textField == phoneField {
+            let res = phoneMask(phoneField: phoneField, textField: textField, range, string)
+            return res.result
+        }
+        return true
     }
 }
 
