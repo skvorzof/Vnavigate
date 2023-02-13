@@ -32,9 +32,21 @@ final class ProfilePhotosViewContoller: UIViewController {
         super.viewDidLoad()
 
         configureColletionView()
-        viewModel.changeState(.initial)
+        changeState(.loading)
     }
 
+    // MARK: - changeState
+    func changeState(_ state: State) {
+        switch state {
+        case .loading:
+            viewModel.fetch()
+        case .loaded:
+            break
+        case .error(_):
+            showAlert(with: "Ошибка", and: "Ошибка загрузки данных")
+        }
+    }
+    
     private func configureColletionView() {
         collectionView.backgroundColor = .systemBackground
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]

@@ -46,31 +46,25 @@ final class ProfileViewController: UIViewController {
 
         configureColletionView()
         setConstraints()
-        configureVewModel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.changeState(.initial)
+        changeState(.loading)
         collectionView.reloadData()
     }
 
-    // MARK: - configureVewModel
-    private func configureVewModel() {
-        viewModel.updateState = { [weak self] state in
-            guard let self = self else { return }
-
-            switch state {
-            case .initial:
-                break
-            case .loading:
-                self.activityIndicator.startAnimating()
-            case .loaded:
-                self.activityIndicator.stopAnimating()
-                self.dataSource?.apply(self.viewModel.dataSourceSnapshot)
-            case .error(let error):
-                self.showAlert(with: "Ошибка", and: error)
-            }
+    // MARK: - changeState
+    func changeState(_ state: State) {
+        switch state {
+        case .loading:
+            activityIndicator.startAnimating()
+            viewModel.fetch()
+        case .loaded:
+            activityIndicator.stopAnimating()
+            dataSource?.apply(viewModel.dataSourceSnapshot)
+        case .error(_):
+            showAlert(with: "Ошибка", and: "Ошибка загрузки данных")
         }
     }
 
@@ -145,7 +139,7 @@ extension ProfileViewController: ProfilePostCellDelegate {
         let isLike = post.isLike ? false : true
         post.setValue(isLike, forKey: "isLike")
         CoreDataManager.shared.save()
-        
+
         guard let selectedLike = dataSource?.itemIdentifier(for: indexPath) else { return }
         guard var snapshot = dataSource?.snapshot() else { return }
         snapshot.reconfigureItems([selectedLike])
@@ -156,7 +150,7 @@ extension ProfileViewController: ProfilePostCellDelegate {
         let isFavorite = post.isFavorite ? false : true
         post.setValue(isFavorite, forKey: "isFavorite")
         CoreDataManager.shared.save()
-        
+
         guard let selectedFavorite = dataSource?.itemIdentifier(for: indexPath) else { return }
         guard var snapshot = dataSource?.snapshot() else { return }
         snapshot.reconfigureItems([selectedFavorite])

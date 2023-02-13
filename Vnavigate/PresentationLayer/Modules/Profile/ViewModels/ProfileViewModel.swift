@@ -10,29 +10,17 @@ import UIKit
 
 final class ProfileViewModel {
 
+    var view: ProfileViewController?
     var dataSourceSnapshot = ProfileDiffableSnapshot()
-
-    var updateState: ((State) -> Void)?
 
     var defaultAuthor: Author?
 
-    private(set) var state: State = .initial {
-        didSet {
-            updateState?(state)
-        }
-    }
+    func fetch() {
+        guard let fetchauthor = CoreDataManager.shared.fetchAuthor(authorId: defaultAuthor?.authorId ?? "0") else { return }
 
-    func changeState(_ action: Action) {
-        switch action {
-        case .initial:
-            state = .loading
-
-            guard let fetchauthor = CoreDataManager.shared.fetchAuthor(authorId: defaultAuthor?.authorId ?? "0") else { return }
-
-            dataSourceSnapshot = makeSnaphot(author: fetchauthor)
-
-            state = .loaded
-        }
+        dataSourceSnapshot = makeSnaphot(author: fetchauthor)
+        
+        view?.changeState(.loaded)
     }
 
     private func makeSnaphot(author: Author) -> ProfileDiffableSnapshot {

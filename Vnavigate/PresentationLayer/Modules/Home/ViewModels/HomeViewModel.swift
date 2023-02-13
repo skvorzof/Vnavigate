@@ -6,34 +6,23 @@
 //
 
 import Foundation
+import UIKit
 
 final class HomeViewModel {
 
+    var view: HomeViewController?
     var dataSourceSnapshot = HomeDiffableSnapshot()
 
-    var updateState: ((State) -> Void)?
+    func fethc() {
+        let friendsPredicate = NSPredicate(format: "isFriend = %d", true)
+        let authors = CoreDataManager.shared.fetch(Author.self, predicate: friendsPredicate, sortDescriptors: nil)
 
-    private(set) var state: State = .initial {
-        didSet {
-            updateState?(state)
-        }
-    }
+        let postsSort = NSSortDescriptor(key: "publishedAt", ascending: false)
+        let posts = CoreDataManager.shared.fetch(Post.self, predicate: nil, sortDescriptors: postsSort)
 
-    func changeState(_ action: Action) {
-        switch action {
-        case .initial:
-            state = .loading
+        dataSourceSnapshot = makeSnaphot(authors: authors, posts: posts)
 
-            let friendsPredicate = NSPredicate(format: "isFriend = %d", true)
-            let authors = CoreDataManager.shared.fetch(Author.self, predicate: friendsPredicate, sortDescriptors: nil)
-
-            let postsSort = NSSortDescriptor(key: "publishedAt", ascending: false)
-            let posts = CoreDataManager.shared.fetch(Post.self, predicate: nil, sortDescriptors: postsSort)
-
-            dataSourceSnapshot = makeSnaphot(authors: authors, posts: posts)
-
-            state = .loaded
-        }
+        view?.changeState(.loaded)
     }
 
     private func makeSnaphot(authors: [Author], posts: [Post]) -> HomeDiffableSnapshot {

@@ -9,29 +9,17 @@ import Foundation
 
 final class FavoritesViewModel {
 
+    var view: FavoritesViewController?
     var dataSourceSnapshot = FavoritesDiffableSnapshot()
 
-    var updateState: ((State) -> Void)?
+    func fetch() {
+        let favoritePredicate = NSPredicate(format: "isFavorite = %d", true)
+        let favoriteSort = NSSortDescriptor(key: "publishedAt", ascending: false)
+        let posts = CoreDataManager.shared.fetch(Post.self, predicate: favoritePredicate, sortDescriptors: favoriteSort)
 
-    private(set) var state: State = .initial {
-        didSet {
-            updateState?(state)
-        }
-    }
+        dataSourceSnapshot = makeSnaphot(posts: posts)
 
-    func changeState(_ action: Action) {
-        switch action {
-        case .initial:
-            state = .loading
-
-            let favoritePredicate = NSPredicate(format: "isFavorite = %d", true)
-            let favoriteSort = NSSortDescriptor(key: "publishedAt", ascending: false)
-            let posts = CoreDataManager.shared.fetch(Post.self, predicate: favoritePredicate, sortDescriptors: favoriteSort)
-
-            dataSourceSnapshot = makeSnaphot(posts: posts)
-
-            state = .loaded
-        }
+        view?.changeState(.loaded)
     }
 
     private func makeSnaphot(posts: [Post]) -> FavoritesDiffableSnapshot {

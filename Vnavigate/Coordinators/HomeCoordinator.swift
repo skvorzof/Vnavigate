@@ -18,6 +18,7 @@ final class HomeCoordinator {
     func start() {
         let homeViewModel = HomeViewModel()
         let homeViewController = HomeViewController(coordinator: self, viewModel: homeViewModel)
+        homeViewModel.view = homeViewController
         homeViewController.title = "Главная"
         homeViewController.navigationItem.backButtonDisplayMode = .minimal
         navigationController.viewControllers = [homeViewController]
@@ -37,6 +38,7 @@ final class HomeCoordinator {
         profileViewModel.defaultAuthor = author
         let profileViewController = ProfileViewController(
             coordinator: ProfileCoordinator(navigationController: navigationController), viewModel: profileViewModel)
+        profileViewModel.view = profileViewController
         profileViewController.navigationItem.backButtonDisplayMode = .minimal
         navigationController.pushViewController(profileViewController, animated: true)
     }

@@ -18,6 +18,7 @@ final class ProfileCoordinator {
     func start() {
         let profileViewModel = ProfileViewModel()
         let profileViewController = ProfileViewController(coordinator: self, viewModel: profileViewModel)
+        profileViewModel.view = profileViewController
         profileViewController.title = "Профиль"
         profileViewController.navigationItem.backButtonDisplayMode = .minimal
         navigationController.viewControllers = [profileViewController]

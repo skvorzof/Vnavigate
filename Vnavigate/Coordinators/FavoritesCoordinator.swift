@@ -18,6 +18,7 @@ final class FavoritesCoordinator {
     func start() {
         let favoritesViewModel = FavoritesViewModel()
         let favoritesViewController = FavoritesViewController(coordinator: self, viewModel: favoritesViewModel)
+        favoritesViewModel.view = favoritesViewController
         favoritesViewController.title = "Избранное"
         favoritesViewController.navigationItem.backButtonDisplayMode = .minimal
         navigationController.viewControllers = [favoritesViewController]
