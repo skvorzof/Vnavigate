@@ -16,11 +16,8 @@ protocol ProfilePostCellDelegate: AnyObject {
 final class ProfilePostCell: UICollectionViewCell {
 
     weak var delegate: ProfilePostCellDelegate?
-
     private var post: Post?
-
     var indexPath: IndexPath?
-
     private lazy var thumbnail = UIImageView()
 
     private lazy var article: UILabel = {

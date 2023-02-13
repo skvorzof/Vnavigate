@@ -14,7 +14,6 @@ protocol HomeFriendCellDelegate: AnyObject {
 final class HomeFriendCell: UICollectionViewCell {
 
     weak var delegate: HomeFriendCellDelegate?
-
     private var author: Author?
     private lazy var avatar = CircularImageView()
 

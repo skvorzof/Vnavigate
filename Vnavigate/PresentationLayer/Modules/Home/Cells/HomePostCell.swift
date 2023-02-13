@@ -17,11 +17,8 @@ protocol HomePostCellDelegate: AnyObject {
 final class HomePostCell: UICollectionViewCell {
 
     weak var delegate: HomePostCellDelegate?
-
     private var post: Post?
-
     var indexPath: IndexPath?
-
     private lazy var avatar = CircularImageView()
     private lazy var name = UILabel()
 

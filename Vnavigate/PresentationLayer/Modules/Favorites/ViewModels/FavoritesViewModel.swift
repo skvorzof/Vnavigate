@@ -9,7 +9,7 @@ import Foundation
 
 final class FavoritesViewModel {
 
-    var view: FavoritesViewController?
+    weak var view: FavoritesViewController?
     var dataSourceSnapshot = FavoritesDiffableSnapshot()
 
     func fetch() {

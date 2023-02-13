@@ -8,5 +8,6 @@
 import Foundation
 
 struct ProfilePhotoDetailViewModel {
+    
     let photo: Photo
 }

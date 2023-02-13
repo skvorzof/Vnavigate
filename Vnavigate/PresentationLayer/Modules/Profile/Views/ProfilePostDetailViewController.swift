@@ -10,7 +10,6 @@ import UIKit
 final class ProfilePostDetailViewController: UIViewController {
 
     private let viewModel: ProfilePostDetailViewModel
-
     private lazy var thumbnail = UIImageView()
 
     private lazy var article: UILabel = {

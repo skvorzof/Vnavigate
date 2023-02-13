@@ -16,11 +16,8 @@ protocol FavoritesCellDelegate: AnyObject {
 final class FavoritesCell: UICollectionViewCell {
 
     weak var delegate: FavoritesCellDelegate?
-
     private var post: Post?
-
     var indexPath: IndexPath?
-
     private lazy var avatar = CircularImageView()
     private lazy var name = UILabel()
 

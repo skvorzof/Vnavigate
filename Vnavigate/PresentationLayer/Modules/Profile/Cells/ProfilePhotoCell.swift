@@ -14,7 +14,6 @@ protocol ProfilePhotoCellDelegate: AnyObject {
 final class ProfilePhotoCell: UICollectionViewCell {
 
     weak var delegate: ProfilePhotoCellDelegate?
-
     var author: Author?
 
     private lazy var photo: UIImageView = {
