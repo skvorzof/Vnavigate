@@ -10,7 +10,7 @@ import UIKit
 
 final class HomeViewModel {
 
-    var view: HomeViewController?
+    weak var view: HomeViewController?
     var dataSourceSnapshot = HomeDiffableSnapshot()
 
     func fethc() {

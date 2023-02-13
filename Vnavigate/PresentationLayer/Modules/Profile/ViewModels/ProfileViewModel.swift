@@ -10,7 +10,7 @@ import UIKit
 
 final class ProfileViewModel {
 
-    var view: ProfileViewController?
+    weak var view: ProfileViewController?
     var dataSourceSnapshot = ProfileDiffableSnapshot()
 
     var defaultAuthor: Author?
